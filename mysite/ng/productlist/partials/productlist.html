@@ -1,0 +1,61 @@
+<div class="productlist">
+
+   <ul class="filters" ng-show="app.itemlist.filters">
+      <li ng-repeat="filter in app.itemlist.filters" >
+
+          <strong>{{filter.name}}:</strong>
+
+          <ul class="filtervalues">
+              <li ng-repeat="filterValue in filter.items"><a href="javascript:void(0)" ng-click="app.toggle(filterValue,app.query.filters[filter.key])"><i class="fa fa-fw fa-lg" ng-class="(app.query.filters[filter.key][filterValue.key])?'fa-check-square':'fa-square-o'"></i>{{filterValue.name}} <span class="dimmed">({{filterValue.count}})</span></a></li>
+              <li class='clear'><a href="javascript:void(0)" ng-click="app.toggleAllFilterValues(filter)">alle/keine markieren</a></li>
+          </ul>
+
+      </li>
+  </ul>
+
+  <div ng-switch on="app.itemlist.listStatus">
+    <div ng-switch-when="loading">
+      <img src="/Mwerkzeug/images/loading.gif" width="16" height="11" alt="Loading">
+    </div>
+    <div ng-switch-when="empty">
+      keine Produkte gefunden
+    </div>
+    <div ng-switch-when="loaded">
+      <div class="itemcount">{{app.itemlist.pagination.total_items}} Produkt<span ng-show="app.itemlist.pagination.total_items>1">e</span></div>
+
+      <div class='pagination-wrapper' ng-show="app.itemlist.pagination.total_items>app.itemlist.pagination.items_per_page">
+        <pagination
+        ng-model="app.itemlist.page"
+        total-items="app.itemlist.pagination.total_items"
+        items-per-page="app.itemlist.pagination.items_per_page"
+        max-size="10"
+        class="pagination"
+        boundary-links="false"
+        direction-links="true"
+        rotate="false"
+        previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+        ></pagination>
+      </div>
+
+
+        <a class='products-item' ng-class="$even ? 'odd' : 'even'" href="{{item.link}}" ng-repeat="item in app.itemlist.items">
+            <h3 class='products-item-title'>{{item.title}}</h3>
+            <div class='products-item-img' ng-show="item.image">
+              <img src="{{item.image}}">
+            </div>
+            <span class='products-item-brandinfo' ng-show="item.brandName">{{item.brandName}}</span>
+            <div class='products-item-shorttext' ng-show="item.shortText">
+              {{item.shortText}}
+            </div>
+            <div class='products-item-kennenlernprice' ng-show="item.kennenlernPrice"><em>Kennenlernpreis:</em> {{item.kennenlernPrice}}</div>
+            <div class='products-item-price'>
+              <div ng-show="item.myDiscount!=0"><strike>{{item.basePriceStr}}</strike><br><em>jetzt nur</em></div>
+              {{item.discountedPriceStr}}
+            </div>
+          </a>
+
+
+    </div>
+  </div>
+
+</div>

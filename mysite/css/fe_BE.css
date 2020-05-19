@@ -1,0 +1,46 @@
+/* manfreds button styles */
+
+a.button {
+-moz-border-radius: 3px;
+-webkit-border-radius: 3px;
+border-radius: 3px;
+padding: 1px 4px;
+color: white;
+font-size: 10px;
+background: #459E00;
+border: 1px solid #327E04;
+font-family:verdana,sans-serif;
+/*display:inline-block;
+line-height:12px;
+*/}
+
+a.button:link, a.button:visited {
+  color:white;
+}
+  
+a.button:hover,
+a.tinyiconbutton:hover {
+background: #73B633
+}
+
+a.button.tinyicon span,
+span.tinyicon {
+  background-image:url('/mysite/thirdparty/jqueryui/css/south-street/images/ui-icons_eeeeee_256x240.png');
+  background-repeat:no-repeat;
+  width: 16px;
+  height:16px;
+  display:inline-block;
+  overflow:hidden;
+  text-indent:-99999px;
+  position:relative;
+  top:4px;
+}
+
+a.button.tinyicon {
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  padding-left:0px;padding-right:0px;  
+}
+
+/* manfreds buttonstyle end */

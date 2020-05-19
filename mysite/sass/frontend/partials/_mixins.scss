@@ -1,0 +1,121 @@
+@import "flex";
+
+// ====================================================================
+@mixin topcontainer() {
+    @include make-container();
+}
+
+
+@mixin ce_inner($num) {
+    .ce-inner {
+        @include ce_width($num);
+        // margin-left: 0;
+    }
+}
+
+@mixin ce_width($num) {
+    max-width: $num*$w-col;
+    margin-left: auto;
+    margin-right: auto;
+    // border: 1px solid blue;
+
+}
+
+@mixin ce_outer() {
+
+    /*keep margins inside */
+    margin-left: auto;
+    margin-right: auto;
+
+    @include ce_width(12);
+    // border: 1px solid red;
+
+}
+
+@mixin mwSetup12GridSpans() {
+    .span-1 {
+        @include make_col(1);
+    }
+
+    .span-2 {
+        @include make_col(2);
+    }
+
+    .span-3 {
+        @include make_col(3);
+    }
+
+    .span-4 {
+        @include make_col(4);
+    }
+
+    .span-5 {
+        @include make_col(5);
+    }
+
+    .span-6 {
+        @include make_col(6);
+    }
+
+    .span-7 {
+        @include make_col(7);
+    }
+
+    .span-8 {
+        @include make_col(8);
+    }
+
+    .span-9 {
+        @include make_col(9);
+    }
+
+    .span-10 {
+        @include make_col(10);
+    }
+
+    .span-11 {
+        @include make_col(11);
+    }
+
+    .span-12 {
+        @include make_col(12);
+    }
+
+
+}
+
+
+// Small devices
+@mixin sm {
+    @media (min-width: #{$screen-sm-min}) {
+        @content;
+    }
+}
+
+// Medium devices
+@mixin md {
+    @media (min-width: #{$screen-md-min}) {
+        @content;
+    }
+}
+
+// Large devices
+@mixin lg {
+    @media (min-width: #{$screen-lg-min}) {
+        @content;
+    }
+}
+
+// Extra large devices
+@mixin xl {
+    @media (min-width: #{$screen-xl-min}) {
+        @content;
+    }
+}
+
+// Custom devices
+@mixin rwd($screen) {
+    @media (min-width: $screen+'px') {
+        @content;
+    }
+}

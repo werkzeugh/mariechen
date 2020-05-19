@@ -1,0 +1,68 @@
+.text-klein,
+.custom-text-klein,
+.copyright {
+  font: $f-txtklein;
+}
+
+>* {
+  font-family: $ff-copy;
+}
+
+// line-height: $lh-copy;
+// font-size: $fs-copy;
+
+p,
+ul,
+ol {
+  /* background-color: #F8F8F8; */
+  padding-top: 0;
+  padding-bottom: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+ul,
+ol {
+  padding-inline-start: 0;
+  padding-left: 2em;
+}
+
+ul {
+  // list-style-image: url("/typo3conf/ext/site/Svg/list_item.svg");
+  list-style-type: circle;
+  padding-left: 1.3em;
+}
+
+ul>li {
+  margin-bottom: 0.5em;
+}
+
+h2,
+h3,
+h4 {
+  padding-top: 0;
+  padding-bottom: 0.75em;
+  margin: 0;
+}
+
+h2 {
+  font: $f-h2;
+  @include font-size(40px);
+}
+
+h3 {
+  // text-decoration: line-through;
+}
+
+h4 {
+  font: $f-h4;
+}
+
+a {
+  // color: $c-textgrey !important;
+  text-decoration: underline;
+}
+
+.text-klein {
+  font: $f-txtklein;
+}

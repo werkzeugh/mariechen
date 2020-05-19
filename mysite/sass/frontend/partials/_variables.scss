@@ -1,0 +1,136 @@
+$c-footer_bg: #f7f7f5;
+
+$c-home: #fff;
+$c-bags: #fff;
+$c-about: #d69492;
+$c-blog: #3580c0;
+$c-info: #000;
+
+$c-lightblue: #e8f1f7;
+$c-background: #eee;
+$c-grass: #a7bd4e;
+$c-greengrey: #e4e8e3;
+$c-linegrey: #c5c5b7;
+$c-lightgrey: #f5f5f5;
+$c-textgrey: #999;
+
+$grid-breakpoints: (xs: 0,
+    sm: 576px,
+    md: 768px,
+    lg: 992px,
+    xl: 1200px);
+
+// Small tablets and large smartphones (landscape view)
+$screen-sm-min: 576px;
+
+// Small tablets (portrait view)
+$screen-md-min: 768px;
+
+// Tablets and small desktops
+$screen-lg-min: 992px;
+
+// Large tablets and desktops
+$screen-xl-min: 1200px;
+
+$container-max-widths: (sm: 768px,
+    md: 992px,
+    lg: 1200px,
+    xl: 1300px);
+
+$w-maxwidth: 2000px;
+$w-tab: 40px;
+$w-col: $w-maxwidth/12;
+
+$w-col-pad: 12px;
+
+$h-upperlimit: 250px/2;
+$h-footer: 250px;
+$main-content-top: 10vh;
+
+$h-pagenav_text: 220px;
+
+$ff-homeslider: "bsst";
+
+$ff-book: "Polaris Book",
+Helvetica,
+Arial,
+sans-serif;
+
+$ff-hl: "Polaris",
+Helvetica,
+Arial,
+sans-serif;
+
+
+$ff-copy: "Polaris Light",
+"Polaris",
+Helvetica,
+Arial,
+sans-serif;
+$fs-copy: 18px;
+$lh-copy: 1.4;
+$f-copy: #{$fs-copy} / #{$lh-copy} $ff-copy;
+
+$ff-intro: $ff-hl;
+$fs-intro: 26px;
+$lh-intro: 1.2;
+$f-intro: #{$fs-intro} / #{$lh-intro} $ff-intro;
+
+$ff-h1: $ff-hl;
+$fs-h1: 50px;
+$lh-h1: 1.3;
+$f-h1: #{$fs-h1} / #{$lh-h1} $ff-h1;
+
+$ff-h2: $ff-hl;
+$fs-h2: 28px;
+$lh-h2: 1.2;
+$f-h2: #{$fs-h2} / #{$lh-h2} $ff-h2;
+
+$ff-h3: $ff-h2;
+$fs-h3: 22px;
+$lh-h3: 1.2;
+$f-h3: bold #{$fs-h3} / #{$lh-h3} $ff-h3;
+
+$ff-h4: $ff-h3;
+$fs-h4: 18px;
+$lh-h4: 1.2;
+$f-h4: bold #{$fs-h4} / #{$lh-h4} $ff-h4;
+
+$ff-teaserh3: $ff-hl;
+$fs-teaserh3: 30px;
+$lh-teaserh3: 40px;
+$f-teaserh3: #{$fs-teaserh3} / #{$lh-teaserh3} $ff-teaserh3;
+
+$ff-txtklein: $ff-h2;
+$fs-txtklein: 16px;
+$lh-txtklein: 1.2;
+$f-txtklein: 100 #{$fs-txtklein} / #{$lh-txtklein} $ff-txtklein;
+
+$f-button: $f-txtklein;
+
+//for bootsterap:
+$theme-colors: ("primary": black);
+$enable-rounded: false;
+
+$enable-validation-icons: false;
+
+$link-color: black;
+// $link-decoration: none !default;
+// $link-hover-color: darken($link-color, 15%) !default;
+// $link-hover-decoration: underline !default;
+// // Darken percentage for links with `.text-*` class (e.g. `.text-success`)
+// $emphasized-link-hover-darken-percentage: 15% !default;
+
+$grid-gutter-width: 24px;
+
+$enable-responsive-font-sizes: 1;
+$rfs-breakpoint:2000px;
+
+$rfs-factor: 100;
+
+$rfs-base-value: 0.8rem;
+
+
+:root {
+    --swiper-navigation-size: 22px;
+}

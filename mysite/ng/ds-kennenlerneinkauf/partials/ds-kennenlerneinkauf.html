@@ -1,0 +1,12 @@
+<div class='bootstrap'>
+    
+    
+    <form role="form" novalidate  name='dataform' ng-submit="requestCode()" class="group form form-horizontal animate"
+    ng-show="status('form')"
+    >
+        <label>Deine e-Mail Adresse:</label>
+        <input type='email' ng-model='fdata.email'>
+        <button class="btn" type="submit" ng-disabled="dataform.$invalid || dataform.$pristine"><i class="icon-arrow-right"></i> OK</button>
+    </form>
+    <div ng-transclude></div>
+</div>

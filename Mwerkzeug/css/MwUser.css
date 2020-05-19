@@ -1,0 +1,47 @@
+
+#MwUserLoginBox {
+  
+  background:#eee;
+  width:400px;
+  padding:10px;
+}
+
+#MwUserLoginBox label {
+display: block;
+float: left;
+width: 100px;
+}
+
+.MwUser label {
+display: block;
+float: left;
+width: 100px;
+}
+
+.MwUserLoginBoxField {
+  margin:5px;
+}
+
+.MwUser h2 {
+  font-size:14px;
+}
+
+.MwUserNarrow {
+  width:300px;
+}
+
+
+.MwUser hr {
+display: block;
+position: relative;
+padding: 0;
+margin: 8px auto;
+width: 100%;
+clear: both;
+border: none;
+border-top: 1px solid #AAA;
+border-bottom: 1px solid #FFF;
+font-size: 1px;
+line-height: 0;
+overflow: visible;
+}

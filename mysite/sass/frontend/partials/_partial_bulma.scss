@@ -1,0 +1,22 @@
+@charset "utf-8";
+/*! bulma.io v0.8.1 | MIT License | github.com/jgthms/bulma */
+
+@import "../../../../node_modules/bulma/sass/utilities/_all";
+@import "../../../../node_modules/bulma/sass/base/_all";
+@import "../../../../node_modules/bulma/sass/elements/_all";
+@import "../../../../node_modules/bulma/sass/form/_all";
+@import "../../../../node_modules/bulma/sass/components/_all";
+@import "../../../../node_modules/bulma/sass/grid/_all";
+@import "../../../../node_modules/bulma/sass/layout/_all";
+
+// needed for bootstrap mixins
+$spacer: 1rem !default;
+$spacers: () !default;
+// stylelint-disable-next-line scss/dollar-variable-default
+$spacers: map-merge((0: 0,
+        1: ($spacer * .25),
+        2: ($spacer * .5),
+        3: $spacer,
+        4: ($spacer * 1.5),
+        5: ($spacer * 3)),
+    $spacers);

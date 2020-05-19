@@ -1,0 +1,32 @@
+* {
+  box-sizing: border-box;
+}
+
+
+.match {
+    font-weight: bold;
+    background:yellow;
+}
+
+.subitems {
+    td.instock {width:100px;
+        text-align: right;
+    }
+}
+
+.itemcount {
+    margin: 10px 0;
+}
+
+
+
+.has-feedback .form-control {
+    padding-right: 23px;
+}
+
+.form-control-feedback {
+    top: 0;
+}
+
+
+

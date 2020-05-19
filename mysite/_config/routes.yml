@@ -1,0 +1,9 @@
+---
+Name: mysite_routes
+Before: mwerkzeug
+---
+SilverStripe\Control\Director:
+  rules:
+    User/$Action/$ID/$OtherID: MysiteUserController
+    BE/Maintainance/$Action/$ID/$OtherID: MaintainanceController
+    TagNode/$Action/$ID/$OtherID: TagNodeApiController

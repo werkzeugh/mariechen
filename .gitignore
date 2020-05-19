@@ -1,0 +1,12 @@
+/silverstripe-cache/
+node_modules
+/.env
+/themes/simple/
+/resources/
+/vendor/
+/.idea/
+/files/
+/log
+/assets/
+/tmp
+

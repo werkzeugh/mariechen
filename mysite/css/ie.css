@@ -1,0 +1,5 @@
+*+html .switcher ul li,
+*+html ul.product li {
+	display:inline;
+	z-index:1;
+}

@@ -1,0 +1,32 @@
+#!/usr/bin/env osascript -l JavaScript
+
+// open with atom
+
+lib = Library("iterm2lib")
+tab = lib.createNewTab()
+
+var r = [],
+    l = [];
+
+l[0] = tab.sessions[0];
+
+r[0] = lib.addCol(l[0]);
+r[2] = lib.addRow(r[0]);
+r[1] = lib.addRow(r[0]);
+
+l[2] = lib.addRow(l[0]);
+l[1] = lib.addRow(l[0]);
+
+
+[
+    ['cd /www/evablut', 'yarn --cwd engine_src/baglist serve'],
+    ['cd /www/evablut', 'git status', 'echo "open https://shop.evablut.com.test/" '],
+    ['cd /www/evablut', 'ssh  -t root@vserver3.werkzeugh.at', 'cd /www/evablut;git status'],
+].reduce(lib.sendCmds, l);
+
+[
+    ['cd /www/evablut_ex', 'iex -S mix phx.server'],
+    ['cd /www/evablut', 'Mwerkzeug/bin/local_db.sh'],
+    ['cd /www/evablut_ex', 'ssh  -t root@vserver3.werkzeugh.at', 'cd /www/evablut_ex; git status'],
+    // ['cd /www/evablut', 'ssh  -t root@vserver3.werkzeugh.at', ],
+].reduce(lib.sendCmds, r);

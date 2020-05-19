@@ -1,0 +1,20 @@
+---
+Name: mysite
+---
+SilverStripe\Core\Manifest\ModuleManifest:
+  project: mysite
+
+SilverStripe\CMS\Model\SiteTree:
+  extensions:
+    - MwSiteTreeConfigExtension
+    
+---
+Name: MysiteI18nMessages
+After:
+    - '#i18nMessages'
+---
+SilverStripe\Core\Injector\Injector:
+  SilverStripe\i18n\Messages\MessageProvider:
+    class: Mysite_i18nMessageProvider
+
+

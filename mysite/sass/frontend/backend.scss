@@ -1,0 +1,28 @@
+@charset "utf-8";
+
+@import "partials/partial_bulma";
+
+// @import "partials/fonts";
+
+@import "partials/variables";
+
+// @import "partials/partial_bootstrap";
+
+
+
+@import "partials/mixins";
+@import "partials/bootstrap_mixins";
+
+// @import "partials/contentelements";
+
+// @import "partials/baglist";
+// @import "partials/bagdetail";
+// @import "partials/checkout";
+@import "partials/orderhtml";
+// @import "partials/newsletter_legacy";
+
+body {
+  background-color: #fff;
+
+  font: $f-copy;
+}
