@@ -1,0 +1,32 @@
+/* 
+Title:		IE patches
+Author: 	dan@simplebits.com
+*/
+
+
+/* PNG fix */
+
+* html #selector { /* for IE<6 */
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=scale src='img/image.png'); background-image: none; background-repeat: no-repeat; background-color: transparent;
+	}
+
+/* self-clear floats */
+
+* html .group { /* IE6 */
+	height: 1%;
+	}
+*:first-child+html .group { /* IE7 */
+	min-height: 1px;
+	}
+	
+*:first-child+html .group { /* IE7 */
+  	min-height: 1px;
+  	}
+  	
+*:first-child+html .sort_active .item {  /* IE7 */
+  display:none
+  }
+  
+*:first-child+html .sort_active .item.for_ie_sort {  /* IE7 */
+  display:block
+  }

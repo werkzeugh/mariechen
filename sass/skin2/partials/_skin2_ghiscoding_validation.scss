@@ -1,0 +1,32 @@
+
+//'ghiscoding.validation':
+/* AngularJS Form validation styling */
+.validation.help-block {
+    color: #E07676;
+    font-style: italic;
+}
+
+/* invalid & (dirty or touched) => red -- CSS3 only */
+.ng-invalid.ng-dirty:not(:focus),
+.ng-invalid.ng-touched:not(:focus) {
+    border-color: #e74c3c;
+    border-width:2px;
+}
+
+/* valid & dirty => green */
+.show-validationstatus.ng-valid.ng-dirty.ng-touched {
+    border-color: #7BA900;
+    border-width:2px;
+
+}
+
+
+/* error display font italic, text-danger is red in BS */
+
+.validation.text-danger {
+    display: inline-block;
+    margin-top: 5px;
+    font-style: normal;
+    color:#E74C3C;
+}
+

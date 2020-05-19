@@ -1,0 +1,43 @@
+---
+Name: mwerkzeug_backendlast
+Before: coreroutes
+---
+SilverStripe\Control\Director:
+  rules:
+      BE/$Action/$ID/$OtherID: BackendPageController
+---
+Name: mwerkzeug_backend
+Before: mwerkzeug_backendlast
+---
+SilverStripe\Control\Director:
+  rules:
+    BE/MwStaticText/$Action/$ID/$OtherID: MysiteStaticTextController
+    BE/StaticTexts/$Action/$ID/$OtherID: MysiteStaticTextController
+    BE/cron: MysiteCronController
+    BE/MwJob/$Action/$ID/$OtherID: MwJobController
+    BE/FreshTag/$Action/$ID/$OtherID: FreshTagController
+    BE/MailLog/$Action/$ID/$OtherID: MwMailLogController
+    BE/MwFile/$Action/$ID/$OtherID: BpMwFileController
+    BE/MwFileChooser/$Action/$ID/$OtherID: BpMwFileController
+    BE/MwFileFieldChooser/$Action/$ID/$OtherID: BpMwFileController
+    BE/CElement/$Action/$ID/$OtherID: BpCElementController
+    BE/C4P_Api/$Action/$ID/$OtherID: BpC4P_ApiController
+    BE/Pages/$Action/$ID/$OtherID/$OtherID2: BpMysitePageController
+    BE/MwLink/$Action/$ID/$OtherID: BpMwLinkController
+    BE/HelpTip/$Action/$ID/$OtherID: HelpTipController
+    BE/User/$Action/$ID/$OtherID: MwUserBEController
+    BE/Newsletter/$Action/$ID/$OtherID: NewsletterBEController
+    BE/profile/$Action/$ID/$OtherID: MwUser_BEProfileController
+    Security/login: MwUserController
+    Security/logout: MwUserController
+    admin: BackendPageController
+---
+Name: mwerkzeug
+Before: mwerkzeug_backend
+---
+SilverStripe\Control\Director:
+  rules:
+    BE/User/$Action/$ID/$OtherID: MwUser_BEController
+    Security/login: MwUserController
+    Security/logout: MwUserController
+    userservice/$Action/$ID/$OtherID: MwUserServiceController

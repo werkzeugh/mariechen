@@ -1,0 +1,49 @@
+---
+Name: mwerkzeug_backendlast
+After: framework/routes#coreroutes
+---
+Director:
+    rules:
+        'BE' : 'BackendPageController'
+
+---
+Name: mwerkzeug_backend
+After: Mwerkzeug/routes#mwerkzeug_backendlast
+---
+Director:
+    rules:
+      'BE/MwStaticText/$Action/$ID/$OtherID' : 'MysiteStaticTextController'
+      'BE/StaticTexts/$Action/$ID/$OtherID'  : 'MysiteStaticTextController'
+      'BE/cron'                              : 'MysiteCronController'
+      'BE/FreshTag/$Action/$ID/$OtherID'     : 'FreshTagController'
+      'BE/MailLog/$Action/$ID/$OtherID'      : 'MwMailLogController'
+      'BE/MwFile/$Action/$ID/$OtherID'             : 'BpMwFileController'
+      'BE/MwFileChooser/$Action/$ID/$OtherID'      : 'BpMwFileController'
+      'BE/MwFileFieldChooser/$Action/$ID/$OtherID' : 'BpMwFileController'
+      'BE/CElement/$Action/$ID/$OtherID'     : 'BpCElementController'
+      'BE/Pages/$Action/$ID/$OtherID'        : 'BpMysitePageController'
+      'BE/MwLink/$Action/$ID/$OtherID'       : 'BpMwLinkController'
+      'BE/HelpTip/$Action/$ID/$OtherID'      : 'HelpTipController'
+      'BE/User/$Action/$ID/$OtherID'         : 'MwUserBEController'
+      'Security/login'                       : 'MwUserController'
+      'Security/logout'                      : 'MwUserController'
+
+---
+Name: mwerkzeug
+After: Mwerkzeug/routes#mwerkzeug_backend
+---
+Director:
+    rules:
+      'User/$Action/$ID/$OtherID'      : 'MwUserController'
+<<<<<<< HEAD
+=======
+      'BE/User/$Action/$ID/$OtherID'   : 'MwUserBEController'
+>>>>>>> refs/heads/multiserver
+      'Security/login'                 : 'MwUserController'
+      'Security/logout'                : 'MwUserController'
+
+
+               
+
+        
+    

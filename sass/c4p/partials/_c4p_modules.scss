@@ -1,0 +1,292 @@
+$susy: layout(12 0.25 after);
+
+* {
+  box-sizing: border-box;
+}
+
+.drag-handle {
+  position: absolute;
+  right: -20px;
+  top: 0px;
+}
+
+.c4p-container {
+  @include container;
+  margin-left: 0;
+}
+
+.c4p-childlist {
+  border: 1px solid #ccc;
+  padding: 10px;
+  background: #fff;
+  margin: 10px;
+  width: 100%;
+  position: relative;
+}
+
+.c4p-top-buttonbar {
+  text-align: right;
+  margin-bottom: 10px;
+}
+
+.btn-default {
+  border-color: #ddd;
+  background-color: #ddd;
+  &:hover {
+    border-color: #bbb;
+    background-color: #bbb;
+  }
+}
+
+
+.btn-blank {
+  border-color: #ddd;
+  background-color: #fff;
+  &:hover {
+    border-color: #bbb;
+    background-color: #F9FF00;
+  }
+}
+
+
+$w-control: 165px;
+
+  .c4p-item-type-chooser {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    line-height: 40px;
+    .typeitems span {
+      padding:0 5px;
+    }
+  }
+.c4p-item {
+  background: #e1e1e1;
+  padding: 10px;
+  position: relative;
+  min-height: 80px;
+  &.editable {
+    border: 2px solid $c-blue;
+  }
+  &.c4p-hidden {
+    opacity: 0.5;
+  }
+  .c4p-ctype {
+    font-size: 13px;
+    padding: 4px;
+    margin-bottom: 6px;
+    border-bottom: 1px dotted #ccc;
+  }
+  .c4p-item-preview,
+  .c4p-item-edit {
+    display: block;
+    margin-right: $w-control + 5;
+  }
+
+  .c4p-item-preview .c4p-preview-children .c4p-hide-on-children {
+    display: none;
+  }
+  &.c4p-is_alias .c4p-hide-on-alias {
+    display: none;
+  }
+
+  .c4p-aliasinfo {
+    padding-bottom: 10px;
+    border-bottom: 1px solid white;
+  }
+
+
+  .c4p-item-childrenedit {
+    display: block;
+    margin-right: 40px;
+  }
+
+
+  .c4p-item-edit,
+  .c4p-item-childrenedit {
+    min-height: 130px;
+  }
+  .c4p-item-controls {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    width: $w-control;
+  }
+  .c4p-itemform {
+    @include container;
+    .nav-pills > li > a {
+      font-size: 13px;
+      padding: 4px 15px;
+    }
+  }
+}
+
+.c4p-edit-left {
+  @include span(6 at 1);
+  position: relative;
+}
+
+.c4p-edit-right {
+  @include span(6 at 7);
+  position: relative;
+}
+
+.c4p-after {
+  margin-top: 10px;
+}
+
+.c4p-p,
+.c4p-item-preview > p {
+  margin-bottom: 6px;
+}
+
+
+.c4p-code {
+  background-color: #eee;
+  font-size: 10px;
+  font-family: courier;
+}
+
+.c4p-inbetween {
+  margin: 5px 0;
+  .btn-primary[disabled] {
+    opacity: 0;
+    visibility: hidden;
+  }
+  > button {
+    opacity: 0.12;
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+
+.c4p-table td {
+  vertical-align: top;
+  padding: 5px;
+  border-left: 1px solid white;
+  &:first-child {
+    border: 0;
+  }
+}
+
+.c4p-itembox {
+  border: 1px solid #fff;
+  margin: 10px;
+  padding: 5px;
+  display: inline-block;
+  vertical-align: top;
+  max-width: 100px;
+
+  img {
+    max-width: 100%;
+    height: auto !important;
+  }
+}
+.c4p-itembox,
+.c4p-table,
+.c4p-sortitem {
+  .c4p-nice2have,.c4p-hideable {
+    display: none;
+  }
+}
+
+.c4p-moretext {
+  text-align: center;
+  margin-top: 8px;
+}
+
+.c4p-tag {
+  margin-bottom:4px;
+  background: #aaa;
+  color: #eee;
+  font-size: 11px;
+  border-radius: 3px;
+  display: inline-block;
+  padding: 2px 4px;
+  b {
+    font-weight: normal;
+    text-transform: uppercase;
+    font-size: 9px;
+  }
+}
+
+.c4p-100 {
+  width: 100%;
+}
+.c4p-align-right {
+  text-align: right;
+}
+
+.c4p-h1 {
+  font-weight: bold;
+  font-size: 1.3em;
+  margin-bottom: 0.8em;
+}
+.c4p-h2 {
+  font-weight: bold;
+  font-size: 1.15em;
+  margin-bottom: 0.8em;
+}
+
+.c4p-itemline {
+  padding: 10px 0;
+  border-top: 1px solid white;
+  &:first-child {
+    border-top: 0;
+  }
+}
+
+.c4p-sortitem button
+ {
+  display: none;
+}
+
+.form-group i {
+  font-style: normal;
+  font-weight: normal;
+  padding-left: 0.5em;
+  font-size: 0.9em;
+}
+
+.c4p-itemform .fa-border {
+  border-color:#444;
+}
+
+
+.c4p-colorbox {
+  box-shadow: 1px 1px 2px 0px rgba(50, 50, 50, 0.75);
+  border: 2px solid white;
+  width: 22px;
+  height: 22px;
+}
+
+.c4p-colorbox {
+  box-shadow: 1px 1px 2px 0px rgba(50, 50, 50, 0.75);
+  border: 2px solid white;
+  width: 22px;
+  height: 22px;
+  display:inline-block;
+}
+
+
+.c4p-label-selectall {
+  font-weight: normal;
+  margin-right: 5px;
+}
+
+.c4p-div-showHidden {
+  text-align:left;
+  .c4p-label-showHidden {
+    font-weight: normal;
+    margin-left: 5px;
+  }
+}
+
+.c4p-helptext {
+
+  border-radius: 2px;
+  margin:10px 0;
+  padding:10px;
+  background:#ccc;
+  color:#777;
+}

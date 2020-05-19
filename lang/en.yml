@@ -1,0 +1,5 @@
+en:
+  mwUserForm:
+    SingleFieldWarning: 'please fill the field which are marked red'
+    MultipleFieldWarning: 'please fill all fields which are marked red'
+  

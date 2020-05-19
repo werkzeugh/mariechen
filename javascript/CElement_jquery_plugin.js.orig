@@ -1,0 +1,614 @@
+(function($) {
+
+    var settings = {
+    };
+
+    var methods = {
+        init: function(options) {
+            if (options) {
+                $.extend(settings, options);
+            }
+            if(settings.c4p_record)
+            {
+              settings.c4p_enabled=1;
+              settings.copypaste_enabled=1;
+            }
+            //show list of CElements by default
+            methods.list.apply(this);
+            
+            return this;
+        },
+        getSettings: function()
+        {
+          return settings;
+        },
+        edit: function(element,urlAddon) {
+          urlAddon = typeof(urlAddon) != 'undefined' ? urlAddon : '';
+          var url,params={};
+          
+           if(settings.c4p_enabled)
+            {
+              url='/BE/CElement/ajaxCElement/'+element.attr('id')+'/edit'+urlAddon;
+              params={'settings':settings};
+            }
+            else
+            {
+               if(settings.baseurl)
+               {
+                var getParams = 'baseurl=' + settings.baseurl;
+                urlAddon = typeof(urlAddon) != 'undefined' ? urlAddon + '&' + getParams : '?' + getParams;
+                url=settings.baseurl+'/ajaxCElement/'+element.attr('id')+'/edit'+urlAddon;
+               }
+               else
+               {
+                url='/BE/Pages/ajaxCElement/'+element.attr('id')+'/edit'+urlAddon;
+               }
+            }
+            
+            element.load(url,params,function()
+          {
+            if(!settings.allowed_CTypes)
+            {
+              element.find('#CType_switcher').hide();
+            }
+            if(settings.on_listchange)
+            {
+              settings.on_listchange.apply(this,arguments);
+            }  
+            //$(this)[0].scrollIntoView();
+            $(this).find('input:first').focus();
+            
+              
+          });
+        },
+        show: function(element,urlAddon)
+        {
+          urlAddon = typeof(urlAddon) != 'undefined' ? urlAddon : '';
+          var url,params={};
+          if(settings.c4p_enabled)
+          {
+            url='/BE/CElement/ajaxCElement/'+element.attr('id')+'/show'+urlAddon;
+            params={'settings':settings};
+          }
+          else if(settings.baseurl)
+          {
+            var getParams = 'baseurl=' + settings.baseurl;
+            urlAddon = typeof(urlAddon) != 'undefined' ? urlAddon + '&' + getParams : '?' + getParams;
+            url=settings.baseurl+'/ajaxCElement/'+element.attr('id')+'/show'+urlAddon;
+          }
+          else
+          {
+            url='/BE/Pages/ajaxCElement/'+element.attr('id')+'/show'+urlAddon;
+          }
+          var self=$(element).closest('.CElementList');
+          element.load(url,params,function(){
+            methods.checkHidden.apply(self);
+            methods.checkClipboardControls.apply(self);
+            if(settings.on_listchange)
+            {
+              settings.on_listchange.apply(self,arguments);
+            }  
+            
+            
+          });
+        },
+        duplicate: function(element)
+        {
+            var url,params={};
+            if(confirm('are you sure ?')){
+               methods.additem.apply(this,[{'duplicateOf':element.attr('id'),'insertAfter':element}]);
+            }
+        },
+        toggle_hide: function(element)
+        {
+            methods.show(element,'?action=toggle_hide');
+        },
+        remove: function(element)
+        {
+          var url,params={};
+          
+              if(confirm('are you sure ?')){
+                
+                if(settings.c4p_enabled)
+                {
+                  url='/BE/CElement/ajaxCElement/'+element.attr('id')+'/remove';
+                  params={'settings':settings};
+                }
+                else
+                {
+                if(settings.baseurl)
+                  url=settings.baseurl+'/ajaxCElement/'+element.attr('id')+'/remove';
+                else
+                 url='/BE/Pages/ajaxCElement/'+element.attr('id')+'/remove';
+                 }               
+                
+                 var self=$(element).closest('.CElementList');
+                $.getJSON(url,params,function(data){
+                  $('#previewframe').attr('src', data.preview_url);
+
+                  element.fadeOut('slow',
+                  function() {
+                    element.remove();
+                    methods.checkHidden.apply(self);
+                    methods.checkSortlink.apply(self);
+                    methods.checkClipboardControls.apply(self);
+  
+                    if (settings.on_listchange)
+                    {
+                      settings.on_listchange.apply(self,arguments);
+                    }
+                  });
+
+
+
+                });
+              }
+          
+        },
+        list: function() {
+          
+          var url,params={};
+          if(settings.c4p_enabled)
+          {
+            url='/BE/CElement/ajaxCElementList/';
+            params={'settings':settings};
+          }
+          else
+         {
+          if(settings.baseurl)
+          {
+            url=settings.baseurl+'/ajaxCElementList/'+settings.record_id+'/'+settings.fieldname;
+          }
+          else
+          {
+            url='/BE/Pages/ajaxCElementList/'+settings.record_id+'/'+settings.fieldname;
+          }
+         }  
+          var self=this;       
+          this.load(url,params,function(){
+            methods.checkHidden.apply(self);
+            methods.checkSortlink.apply(self);
+            methods.checkClipboardControls.apply(self);
+            if(settings.on_listchange)
+            {
+              settings.on_listchange.apply(this, arguments);
+            }
+          });
+          
+        },
+        pasteSelectionFromClipboard:function(self,func_args)
+        {
+           
+          //get all selected items
+           data=[];
+           var element;
+    
+           if(func_args.useBrowserClipboard)
+           {
+             var html = $('<div class="bootstrap"><div class="space well errorbox22">please paste the content of your clipboard here</div>'+
+                          '<div class="pull-right"><button class="btn btn-primary submitboxy"><i class="icon-white icon-ok"></i> OK</button>'+
+                          '<div>&nbsp;</div><button class="btn btn-small pull-right closeboxy"><i class="icon-remove"></i> close</button> </div>'+
+                          '<textarea id="copybox22" style="width:500px;height:250px;margin-right:10px;font: courier 11px"></textarea>');
+                       
+             var copyWindow = new Boxy(html, {
+                         title: 'copy',
+                         modal: true,
+                         y:jQuery(document).scrollTop() + 30
+                                       
+                     });
+              copyWindow.center('x');
+                     
+              $('#copybox22').focus();
+              $('.closeboxy','.boxy-wrapper').on('click',function(e)
+              {
+                copyWindow.hide();
+              });
+              $('.submitboxy','.boxy-wrapper').on('click',function(e)
+              {
+<<<<<<< HEAD
+                var jsonData=$('#copybox22',$(this).closest('.boxy-wrapper')).val();
+=======
+                var jsonData=$('#copybox22').val();
+>>>>>>> refs/heads/multiserver
+                try
+                {
+                   var json = JSON.parse(jsonData);
+                }
+                catch(e)
+                {
+                  alert("invalid clipboard content !");
+                }
+                
+                if(json)
+                {
+                  methods.doPasteSelectionFromClipboard.apply(self,[self,jsonData]);
+                  copyWindow.hide();
+                }
+                
+               
+              });
+             
+           }
+           else
+           {
+             methods.doPasteSelectionFromClipboard.apply(self,[self,null]);
+           }
+        },
+        doPasteSelectionFromClipboard:function(self,jsonData){
+          
+          var url='/BE/CElement/ajaxCElement/0-0-0/pasteSelectionFromClipboard';
+          params={'settings':settings,'jsonData':jsonData};
+             
+          $(self).before('<div class="CElementCopyPasteControlFeedback bootstrap " style="padding:10px 0px"><img src="/Mwerkzeug/images/loading.gif" width="16" height="11" alt="Loading"></div>');
+
+          $.post(url,params,function(response){
+
+            var alert_status=(response.status=='error')?'alert-error':'alert-success';
+            if(response.status=='warning')
+            {
+               alert_status='alert-warning';
+            }
+               
+            $('.CElementCopyPasteControlFeedback').html("<span class='alert "+alert_status+"' >"+response.msg+"</span>");
+
+            $('.CElementCopyPasteControlFeedback').delay(12200).slideUp('slow',function(){
+               $(this).remove();}
+            );
+
+            methods.list.apply(self);
+               
+          },'json');
+        },
+        copySelectionToClipboard:function(self,func_args)
+                {
+         
+                  //get all selected items
+                   data=[];
+                   var element;
+                   $('.CElement-cb input:checked',self).each(function()
+                   {
+                     if(!element)
+                     {
+                       element=$(this).closest('li');
+                     }
+                     data.push($(this).val());
+                   });
+          
+
+                   
+                   if(element)
+                   {
+
+                       var url='/BE/CElement/ajaxCElement/'+element.attr('id')+'/copySelectionToClipboard';
+                       params={'items':data,'settings':settings};
+                       $('.CElementCopyPasteControls').append('<div class="CElementCopyPasteControlFeedback bootstrap space"><img src="/Mwerkzeug/images/loading.gif" width="16" height="11" alt="Loading"></div>');
+                       $.post(url,params,function(response){
+               
+                         var alert_status=(response.status=='error')?'alert-error':'alert-success';
+                    
+               
+                         $('.CElementCopyPasteControlFeedback',self).html("<span class='alert "+alert_status+"' >"+response.msg+"</span>");
+
+                         $('.CElementCopyPasteControlFeedback',self).delay(2200).slideUp('slow',function(){$(this).remove();});
+
+                         if(func_args.useBrowserClipboard)
+                         {
+                           var html = $('<div class="bootstrap"><div class="space well">please put the content of the following textfield in your clipboard</div>'+
+                                        '<textarea id="copybox22" style="width:600px;height:250px;font: courier 11px">'+ response.data +'</textarea>'+
+                                        '<div>&nbsp;</div><a class="btn btn-small pull-right closeboxy"><i class="icon-remove"></i> close</a> </div><div>&nbsp;</div>');
+                       
+                           var copyWindow = new Boxy(html, {
+                                       title: 'copy',
+                                       modal: true,
+                                       y:jQuery(document).scrollTop() + 30
+                                       
+                                   });
+                            copyWindow.center('x');
+                     
+                            $('#copybox22').focus().select();
+                            $('a.closeboxy','.boxy-wrapper').on('click',function(e)
+                            {
+                              e.preventDefault();
+                              copyWindow.hide();
+                            });
+                         }
+
+                       },'json');
+                   }
+                   
+                   
+          
+          
+                },
+        checkClipboardControls:function()
+        {
+          var self=this;
+          if(settings.copypaste_enabled)
+          {
+            if($('.CElementCopyPasteControls',this).length == 0)
+            {
+              
+              var $controlsdiv=$("<span class='CElementCopyPasteControls'></span>");
+              $enableCopyPasteButton=$("<a href='#' class='button ' title='copy selected elements'><span class='tinyicon ui-icon-copy'></span> copy</a>").on('click',function(e){
+
+                e.preventDefault();
+                var params={};
+                if(e.shiftKey)
+                {
+                  params.useBrowserClipboard=true;
+                }
+                
+                methods.copySelectionToClipboard.apply(this,[self,params]);
+
+              });
+
+              $pasteButton=$("<a href='#' class='button pasteCElements' ><span class='tinyicon ui-icon-arrowthick-1-s'></span> paste</a>").on('click',function(e){
+                e.preventDefault();
+                var params={};
+                if(e.shiftKey)
+                {
+                  params.useBrowserClipboard=true;
+                }
+                methods.pasteSelectionFromClipboard.apply(this,[self,params]);
+              });
+
+              
+              
+              $toggleAllButton=$("<a href='#' class='button toggleAllCElement-cb' >select all elements</a>").on('click',function(e){
+                e.preventDefault();
+                //get first setting:
+                if($('.CElement-cb input',self).first().is(":checked"))
+                {
+                  $('.CElement-cb input',self).removeAttr('checked');
+                }
+                else
+                {
+                  $('.CElement-cb input',self).attr('checked','1');
+                }
+
+              });
+              
+              $controlsdiv.append($enableCopyPasteButton);
+              $controlsdiv.append($toggleAllButton);
+              $controlsdiv.append($pasteButton);
+              $('.CElementTopButtons',this).append($controlsdiv);
+            }
+          }
+          
+          
+          $('.CElement').each(function(){
+                
+            if($('.CElement-cb',this).length==0)
+            {
+              var myid=$(this).closest('li').attr('id');
+              $(this).append('<div class="CElement-cb"><input type="checkbox" value="'+myid+'"></div>');
+            }
+                
+          });
+          
+          
+        },
+        checkHiddenButton:function(self)
+        {
+          if($(this).is(":checked"))
+          {
+             $('li > .hidden',self).show();
+          } 
+          else
+          {
+            $('li > .hidden',self).hide();                     
+          } 
+          
+          
+        },
+        checkHidden:function() {
+          var self=this;
+           if($('.CElementHideCb',this).length == 0)
+           {
+             $('li > .hidden',self).hide();
+           }
+           //count hidden
+          var hidecount=$('li > .hidden',this).length;
+          if(hidecount>0)
+          {
+            if($('.CElementHideCb',this).length == 0)
+            {
+              var $cbdiv=$("<div class='CElementHideCb'></div>");
+                
+              var $cb=$("<input type='checkbox'>").click(function(){
+                methods.checkHiddenButton.apply(this,[self]);
+              });
+              
+              $cbdiv.append($cb);
+              $cbdiv.append(" show hidden elements (<span class='hidecount'> </span>)");
+              $('.CElementListUL',this).before($cbdiv);
+            }
+            else
+            {
+              methods.checkHiddenButton.apply($('.CElementHideCb input',this)[0],self);
+              
+            }
+            $('.hidecount',this).text(hidecount);
+          }
+          else
+          {
+            $('.CElementHideCb',this).remove();
+          }
+            
+        },
+        checkSortlink:function()
+        {
+          var theList=methods.getCElementListUL.apply(this);
+          var numelements=theList.children('li').length;
+          if(numelements>1)
+            {$('.celement_sortlink',this).show();}
+          else
+            {$('.celement_sortlink',this).hide();}
+          
+        },
+        sortelements: function() {
+          
+              var url,params={};
+              if(settings.c4p_enabled)
+              {
+                url='/BE/CElement/ajaxCElementList/?sortmode=1';
+                params={'settings':settings};
+              }
+              else
+              {
+                url='/BE/Pages/ajaxCElementList/'+settings.record_id+'/'+settings.fieldname+'/?sortmode=1';
+              }
+
+          this.load(url,params);
+        },
+        showCTypeEdit: function($element) {
+          chooser=methods.getCTypeChooser($element);
+          if(chooser)
+          {
+            $element.parent().find('.CTypeChooser').remove();
+            $element.find('#CType_switcher').before(chooser);
+            $element.parent().find('.CTypeChooser').slideDown('normal',function(){
+              $(this).on('mouseleave',function()
+               {
+                  $(this).slideUp();
+               });
+              
+            });
+          }
+        },
+        getCTypeChooser: function($element) {
+          
+          $html=$("<div class='CTypeChooser'><input type='hidden' name='nextaction' value='edit'><ul></ul> </div>");
+
+          $ul=$html.find('ul');
+          
+          currentCTypeValue=$element.find('#CType_field').val();
+          
+          $.each(settings.allowed_CTypes, function(key, value) { 
+            if(key!=currentCTypeValue)
+              $ul.append("<li key='"+key+"'>&rarr; "+value+"</li>");
+          });
+
+          $ul.find('li').click(function()
+          {
+            $element.find('#CType_field').val($(this).attr('key'));
+            CElement_submit(this);
+          });
+          
+          
+          return $html;
+        },
+        savesortelements: function() {
+          var url,params={};
+          
+          var idlist=' ';
+          theList=methods.getCElementListUL.apply(this);
+          theList.children().each(function()
+          {
+            idlist+=$(this).attr('id')+' ';
+          });
+          element=theList.children().first();
+          form=$("<form method='POST' target='previewframe'>");
+          
+          if(settings.c4p_enabled)
+          {
+            url='/BE/CElement/ajaxCElement/'+element.attr('id')+'/savesortelements';            
+          }
+          else
+          {
+            url='/BE/Pages/ajaxCElement/'+element.attr('id')+'/savesortelements';
+          }
+          
+          form.attr('action',url);
+          $("<input type='text' name='settings_json'>").attr('value',$.toJSON(settings)).appendTo(form);
+          $("<input type='text' name='sortIds'>").attr('value',idlist).appendTo(form);
+          form.appendTo(theList);
+          form.submit();
+          form.remove();
+          
+        },
+        savetreesortelements: function() {
+            var idlist='',parentidlist='';
+            theList=$('#sorttree');
+            theList.find('li').each(function()
+            {
+              idlist+=$(this).attr('id')+',';
+              var par=$(this).parent().closest('li');
+              if(par.length)
+              {
+                parentidlist+=par.attr('id')+',';
+              }
+              else
+              {
+                parentidlist+='0,';
+              }
+            });
+//            console.log(idlist);
+//            console.log(parentidlist);
+            element=$('.sortdummyelement');
+            form=$("<form method='POST' target='previewframe'>");
+            form.attr('action',settings.baseurl+'/ajaxCElement/'+element.attr('id')+'/savetreesortelements');
+            $("<input type='text' name='sortIds'>").attr('value',idlist).appendTo(form);
+            $("<input type='text' name='sortParentIds'>").attr('value',parentidlist).appendTo(form);
+            form.appendTo(theList);
+            form.submit();
+            form.remove();
+          },
+        getCElementListUL: function()
+        {
+          return this.find('.CElementListUL');
+        },
+        additem: function(params2)
+        {
+          var params=$.extend({}, params2);
+          var newitem;
+          theList=methods.getCElementListUL.apply(this);
+          newid = settings.fieldname+'-'+settings.record_id+'-'+new Date().getTime();
+          var CType = params.CType || settings.default_CType;
+          if(params.insertAfter)
+          {
+            newitem=$("<li>new " + CType + "...</li>");
+            newitem.insertAfter(params.insertAfter);
+            newitem.attr('insertafter',$(params.insertAfter).attr('id'));
+            // params.addonParams=(params.addonParams?params.addonParams+'&':'');
+            // params.addonParams+='insertAfter='+$(params.insertAfter).attr('id');
+          }
+          else
+          {
+            newitem=$("<li>new " + CType + "...</li>");
+            newitem.appendTo(theList);
+          }
+          
+          if(params.duplicateOf)
+          {
+            newitem.attr('duplicateof',params.duplicateOf);
+            params.addonParams=(params.addonParams?params.addonParams+'&':'');
+            params.addonParams+='duplicateOf='+params.duplicateOf;
+          }
+          newitem.attr('id',newid);
+          methods.edit(newitem,'?default_CType='+CType+(params.addonParams?('&'+params.addonParams):''));
+          methods.checkSortlink.apply(this);
+          methods.checkClipboardControls.apply(this);
+          
+        },
+        hide: function() {},
+        update: function(content) {}
+    };
+
+    $.fn.CElement = function(method) {
+
+        $this=$(this);
+        // Method calling logic
+        if (methods[method]) {
+            return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
+        } else if (typeof method === 'object' || !method) {
+            return methods.init.apply(this, arguments);
+        } else {
+            $.error('Method ' + method + ' does not exist on jQuery.CElement');
+            return false;
+        }
+
+    };
+
+})(jQuery);
+
