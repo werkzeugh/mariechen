@@ -1,0 +1,30 @@
+
+.quicktagedit {width:150px;}
+
+.FreshTagChooser {border:1px solid #888;margin:5px;padding:5px;background:#eee;position:relative;}
+
+.FreshTagChooser .closebutton {position:absolute;right:5px;top:5px;}
+
+.FreshTagFieldDIV ._previewplace {margin:10px 0px;}
+
+.freshtag {
+  font-size:11px;
+  line-height:16px;
+  display:inline-block;
+  background:#ddf;
+  color:#444;
+  border:1px solid #99a;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  padding:2px;
+  margin-right:5px;
+  margin-bottom:5px;}
+
+  .freshtag b { 
+    font-size:12px;
+  }
+
+  a.freshtag:hover {background:#bbd;}
+    
+  

@@ -1,0 +1,152 @@
+// /*!
+//  * Bootstrap v3.0.0
+//  *
+//  * Copyright 2013 Twitter, Inc
+//  * Licensed under the Apache License v2.0
+//  * http://www.apache.org/licenses/LICENSE-2.0
+//  *
+//  * Designed and built with all the love in the world by @mdo and @fat.
+//
+// Core variables and mixins
+
+@import "bootstrap-sass/assets/stylesheets/bootstrap/variables";
+
+//$icon-font-path:"/mysite/thirdparty/bootstrap3-fonts/";
+$input-color-placeholder: #ddd;
+$dropdown-link-hover-bg: #ccc;
+
+@import "bootstrap-sass/assets/stylesheets/bootstrap/mixins";
+
+//
+//// Reset
+//@import "bootstrap-sass/assets/stylesheets/bootstrap/normalize";
+@import "bootstrap-sass/assets/stylesheets/bootstrap/print";
+
+// Core CSS
+@import "bootstrap-sass/assets/stylesheets/bootstrap/scaffolding";
+$skip_bootstrap_type_setup: true;
+
+// @import "bootstrap-sass/assets/stylesheets/bootstrap/type";
+
+//@import "bootstrap-sass/assets/stylesheets/bootstrap/code";
+@import "bootstrap-sass/assets/stylesheets/bootstrap/grid";
+@import "bootstrap-sass/assets/stylesheets/bootstrap/tables";
+@import "bootstrap-sass/assets/stylesheets/bootstrap/forms";
+@import "bootstrap-sass/assets/stylesheets/bootstrap/buttons";
+
+// Components
+@import "bootstrap-sass/assets/stylesheets/bootstrap/component-animations";
+
+// @import "bootstrap-sass/assets/stylesheets/bootstrap/glyphicons";
+@import "bootstrap-sass/assets/stylesheets/bootstrap/dropdowns";
+@import "bootstrap-sass/assets/stylesheets/bootstrap/button-groups";
+@import "bootstrap-sass/assets/stylesheets/bootstrap/input-groups";
+@import "bootstrap-sass/assets/stylesheets/bootstrap/navs";
+
+// @import "bootstrap-sass/assets/stylesheets/bootstrap/navbar";
+// @import "bootstrap-sass/assets/stylesheets/bootstrap/breadcrumbs";
+// @import "bootstrap-sass/assets/stylesheets/bootstrap/pagination";
+// @import "bootstrap-sass/assets/stylesheets/bootstrap/pager";
+@import "bootstrap-sass/assets/stylesheets/bootstrap/labels";
+
+// @import "bootstrap-sass/assets/stylesheets/bootstrap/badges";
+// @import "bootstrap-sass/assets/stylesheets/bootstrap/jumbotron";
+// @import "bootstrap-sass/assets/stylesheets/bootstrap/thumbnails";
+@import "bootstrap-sass/assets/stylesheets/bootstrap/alerts";
+
+// @import "bootstrap-sass/assets/stylesheets/bootstrap/progress-bars";
+// @import "bootstrap-sass/assets/stylesheets/bootstrap/media";
+// @import "bootstrap-sass/assets/stylesheets/bootstrap/list-group";
+@import "bootstrap-sass/assets/stylesheets/bootstrap/panels";
+
+// @import "bootstrap-sass/assets/stylesheets/bootstrap/wells";
+// @import "bootstrap-sass/assets/stylesheets/bootstrap/close";
+
+//// Components w/ JavaScript
+@import "bootstrap-sass/assets/stylesheets/bootstrap/modals";
+
+//@import "bootstrap-sass/assets/stylesheets/bootstrap/tooltip";
+// @import "bootstrap-sass/assets/stylesheets/bootstrap/popovers";
+// @import "bootstrap-sass/assets/stylesheets/bootstrap/carousel";
+
+// Utility classes
+@import "bootstrap-sass/assets/stylesheets/bootstrap/utilities";
+
+// @import "bootstrap-sass/assets/stylesheets/bootstrap/responsive-utilities";
+
+// local bootstrap styles ---------- BEGIN
+
+// ---- taken from _type.scss ---------- BEGIN
+
+// Unstyled keeps list items block level, just removes default browser padding and list-style
+.list-unstyled {
+  padding-left: 0;
+  list-style: none;
+}
+
+// Inline turns list items into inline-block
+.list-inline {
+  @extend .list-unstyled;
+  > li {
+    display: inline-block;
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+}
+
+// ---- taken from _type.scss ---------- END
+
+//for angular-ui-bootstrap:
+.nav, .pagination, .carousel, .panel-title a {
+  cursor: pointer;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+// local bootstrap styles ---------- END
+
+//checkbox-heightfix:
+.radio label,
+.checkbox label {
+  font-size: 13px;
+  line-height: 20px;
+}
+
+.has-error {
+  label {
+    color:#a94442;
+  }
+  .form-control {
+    border-width:2px;
+  }
+}
+
+
+.tab-content {
+ overflow: visible; 
+}
+
+
+label.radio {
+  font-weight: normal;
+  margin-left: 20px;
+}
+
+
+.lh-1 {
+  line-height: 1;
+}
+
+
+$c-placeholder:#f00;
+
+

@@ -1,0 +1,162 @@
+ul.listmode_list {
+  margin: 20px 0px;
+  width: 600px;
+}
+
+
+ul.listmode_list .MwFileItem {
+  padding: 2px 5px;
+}
+
+ul.listmode_list .MwFileItem .line {
+  padding: 5px 0px;
+  margin-left: 16px;
+}
+
+
+ul.listmode _list li.even {
+  background: #fff;
+}
+
+
+ul.listmode_list li.odd {
+  background: #eee;
+}
+
+ul.listmode_list .line {
+  position: relative;
+}
+
+
+
+ul.listmode_list .MwFileItem .itemtitle {
+  width: 300px;
+  display: block;
+  float: left;
+}
+
+ul.listmode_list .MwFileItem .itemtags {
+  width: 200px;
+  display: block;
+  float: left;
+}
+
+
+ul.listmode_list .MwFileItem .copyright {
+  width: 200px;
+  position: absolute;
+  right: 0px;
+  text-align: right;
+  color: #aaa;
+}
+
+ul.listmode_list .MwFileItem ._thumbnail {
+  position: absolute;
+  right: 0px;
+  width: 200px;
+}
+
+
+
+ul.listmode_list .MwFileItem ._buttons {
+  position: absolute;
+  right: 0px;
+  top: -5px;
+  text-align: right;
+  width: 200px;
+}
+
+ul.listmode_list .MwFileItem ._buttons div {
+  float: right;
+  width: auto;
+  margin-left: 6px;
+  height: 20px;
+}
+
+.listmode_icons .MwFileItem {
+  display: block;
+  min-width: 100px;
+  min-height: 100px;
+  border: 1px solid #bbb;
+  padding: 10px 10px 0px 10px;
+  margin: 6px;
+  float: left;
+  overflow: hidden;
+  background: #eee;
+}
+
+ul.listmode_icons .MwFileItem ._thumbnail {
+  position: relative
+}
+
+ul.listmode_icons .MwFileItem ._buttons {
+  text-align: right;
+  right: 5px;
+  top: 5px;
+  position: absolute;
+  width: 140px;
+}
+
+.MwFileItem ._hover {
+  display: none;
+}
+
+.MwFileItem ._buttons .button {
+  padding-left: 2px;
+  padding-right: 2px;
+}
+
+ul.listmode_icons .MwFileItem ._choose {
+  position: relative;
+  top: 20px;
+}
+
+.MwFileItem ._filename {
+  font-size: 10px;
+  margin: 3px 0px;
+}
+
+.MwFileItem ._copyright {
+  display: none;
+  font-size: 10px;
+  padding: 2px 0px;
+  position: absolute;
+  width: 100%;
+  color: white;
+  background: rgb(20, 20, 20, 0.6);
+  background: rgba(9, 9, 9, 0.6);
+  bottom: 0px;
+}
+
+a.listmode_list span,
+a.listmode_icons span {
+  background-image: url("../images/listmode_icons_eeeeee.gif");
+  background-repeat: no-repeat;
+  display: inline-block;
+  height: 16px;
+  overflow: hidden;
+  position: relative;
+  text-indent: -99999px;
+  top: -1px;
+  width: 16px;
+}
+
+a.listmode_icons span {
+  background-position: 3px 4px;
+}
+
+a.listmode_list span {
+  background-position: -15px 4px;
+}
+
+
+div.dragicon {
+  background: url('/Mwerkzeug/images/sort_grip.png') no-repeat left top;
+  width: 10px;
+  height: 25px;
+  margin-right: 5px;
+  -moz-user-select: none;
+  cursor: move;
+  position: absolute;
+  left: 0px;
+}

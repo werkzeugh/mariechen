@@ -1,0 +1,272 @@
+<div class='c4p-container'>
+
+
+    <div ng-bind-html="settings.placeconf.topHtml|trusted"></div>
+
+    <div ng-show="listStatus=='loading'">
+        <img src="/Mwerkzeug/images/loading.gif" width="16" height="11" alt="Loading">
+    </div>
+
+
+    <div ng-show="listStatus=='loaded'">
+
+        <div ng-if="listMode=='sort'" class='c4p-sortlist'>
+
+            <div class='c4p-sortlist-header'>
+                <button class="btn btn-primary btn" type="button" ng-click="saveOrder()"
+                    ng-disabled="saveOrderInProgress"><i class="fa fa-check"></i> <span
+                        translate>label_save</span></button>
+
+                <img src="/Mwerkzeug/images/loading.gif" width="16" height="11" alt="Loading"
+                    ng-show="saveOrderInProgress">
+                <button class="btn btn-sm btn-default pull-right" type="button" ng-click="setListMode('list')"><i
+                        class="fa fa-times"></i> <span translate>label_cancel</span></button>
+            </div>
+
+            <div ui-tree="treeOptions" id="tree-root">
+                <ol ui-tree-nodes="" ng-model="sortableItems">
+                    <li ng-repeat="i in sortableItems" ui-tree-node>
+                        <div class="c4p-sortitem" ui-tree-handle ng-show="status.showHidden || !i.hidden">
+                            <c4p-sort-preview-template template="i.html" class="c4p-item-preview">preview here
+                            </c4p-sort-preview-template>
+                        </div>
+                        <div ng-show='i.config._children' class='c4p-sortable-subitems'>
+                            <ol ui-tree-nodes="" ng-model="i._children" data-horizontal="">
+                                <li ng-repeat="c in i._children" ui-tree-node>
+                                    <div class="c4p-sortitem" ui-tree-handle>
+                                        <c4p-sort-preview-template template="c.html" class="c4p-item-preview">preview
+                                            here</c4p-sort-preview-template>
+                                    </div>
+                                </li>
+                            </ol>
+                        </div>
+                    </li>
+                </ol>
+            </div>
+
+        </div>
+
+        <div ng-if="listMode=='list'">
+
+
+            <div class='c4p-top-buttonbar' ng-hide="globalEditMode">
+                <button class="btn btn-xs btn-default" type="button" ng-click="setListMode('sort')"
+                    ng-show="list.permissions.c4p_reorder && items.length>1"><i class="fa fa-reorder"></i> <span
+                        translate>label_reorderItems</span></button>
+
+
+                <div>&nbsp;</div>
+                <div ng-show="multiActionLoading"><img src="/Mwerkzeug/images/loading.gif" width="16" height="11"
+                        alt="Loading"></div>
+
+                <div>
+                    <span ng-show='list.permissions.c4p_multiselect && selectedItems.length'>
+                        <span translate translate-values="{{ {num:selectedItems.length} }}">hl_perform_actions</span>
+
+                        <button class="btn btn-xs btn-primary" type="button"
+                            ng-disabled="multiActionLoading || !list.permissions.c4p_add"
+                            ng-click="multiAction('hide',$event)"><i class="fa fa-eye-slash"></i> <span
+                                translate>label_hide</span></button>
+
+                        <button class="btn btn-xs btn-primary" type="button"
+                            ng-disabled="multiActionLoading || !list.permissions.c4p_add"
+                            ng-click="multiAction('unhide',$event)"><i class="fa fa-eye"></i> <span
+                                translate>label_unHide</span></button>
+
+                        <button class="btn btn-xs btn-primary" type="button"
+                            ng-disabled="multiActionLoading || !list.permissions.c4p_add"
+                            ng-click="multiAction('remove',$event)"><i class="fa fa-trash-o"></i> <span
+                                translate>label_delete</span></button>
+
+                        <button class="btn btn-xs btn-primary" type="button"
+                            ng-disabled="multiActionLoading || !list.permissions.c4p_add"
+                            ng-click="multiAction('cut',$event)"><i class="fa fa-cut"></i> <span
+                                translate>label_cut</span></button>
+
+                        <button class="btn btn-xs btn-primary" type="button" ng-disabled="multiActionLoading"
+                            ng-click="multiAction('copy',$event)"><i class="fa fa-clipboard"></i> <span
+                                translate>label_copy</span></button>
+
+                        <button class="btn btn-xs btn-primary" type="button" ng-disabled="multiActionLoading"
+                            ng-click="multiAction('copyalias',$event)"><i class='fa fa-mail-forward'></i><i
+                                class="fa fa-clipboard"></i> <span translate>label_copyAsAliasItem</span></button>
+
+                    </span>
+                </div>
+
+                <div class='pull-right' ng-show='list.permissions.c4p_multiselect && items.length>1'>
+                    <label class="c4p-label-selectall"><span translate>label_selectAll</span> <input type='checkbox'
+                            ng-model='status.selectAll'></label>
+                </div>
+
+                <div class="c4p-div-showHidden" ng-show="hiddenItems.length">
+                    <label class="c4p-label-showHidden"><input type='checkbox' ng-model='status.showHidden'> <span
+                            translate translate-values="{{ {num:hiddenItems.length} }}">label_showHidden</span> </label>
+                </div>
+
+
+                <div>&nbsp;</div>
+
+            </div>
+
+
+
+
+            <div ng-repeat="i in items">
+                <div class="c4p-inbetween" ng-show="status.showHidden || !i.hidden">
+                    <button class="btn btn-primary btn-xs" type="button" ng-click="addItem(i)"
+                        ng-disabled="globalEditMode" ng-show="isAddingPossible && list.permissions.c4p_add"><i
+                            class="fa fa-plus"></i> <span translate>label_addItemHere</span></button>
+                    <span c4p-create-item-type-chooser ng-if="showAddArea=='item_'+i.id" ng-hide="globalEditMode"><i
+                            class="fa fa-plus"></i> add my item</span>
+
+                    <button class="btn btn-xs btn-primary" type="button" ng-disabled="multiActionLoading"
+                        ng-click="pasteItems($event,{before:i.id})"
+                        ng-show="app.serverinfo.clipboardsize && list.permissions.c4p_add"><i
+                            class="fa fa-long-arrow-down"></i> <span translate
+                            translate-values='{{ {num:app.serverinfo.clipboardsize} }}'>label_paste_n_items</span></button>
+
+
+                </div>
+                <div class="c4p-item" id="c4p-item-{{i.id}}" ng-dblclick="editItem(i)"
+                    ng-class="{editable: i.editable, 'c4p-hidden': i.hidden, 'c4p-is_alias':i.is_alias}"
+                    ng-show="status.showHidden || !i.hidden">
+                    <c4p-preview-template template="i.html" item="i" class="c4p-item-preview"
+                        ng-hide="i.editready || i.childreneditready || i.loading">preview here</c4p-preview-template>
+                    <div ng-show="i.loading"><img src="/Mwerkzeug/images/loading.gif" width="16" height="11"
+                            alt="Loading"></div>
+                    <div class='c4p-item-edit' id='editform-{{i.id}}' ng-show="i.editready">
+                        ...
+                    </div>
+                    <div class='c4p-item-childrenedit' ng-if='i.childreneditready'>
+
+                        <c4p-childlist record='{{settings.c4p_record}}'
+                            place='{{settings.c4p_place}}/{{i.id}}/{{childrenEditGroupname}}'
+                            placeconfig='{{i.config[childrenEditGroupname]}}'> childlist-inner-2remove </c4p-childlist>
+
+                    </div>
+
+                    <div class='c4p-item-controls' ng-hide='i.loading'>
+                        <span ng-if="i.childreneditready">
+                            <button class="btn btn-primary btn-xs pull-right" type="button" ng-click="cancelItem(i)"
+                                title="ng-attr-title=" {{'label_cancelEditing' | translate}}""><i
+                                    class="fa fa-times"></i> {{i.ctype | getLabel:settings.placeconf.allowed_types}}
+                                <span translate>label_close</span></button>
+                        </span>
+                        <span ng-if="i.editable">
+                            <div class='c4p-ctype' ng-show="i.editready && !i.submitting">Type:
+
+                                <div ng-hide="i.permissions.typeChange && getOtherAllowedTypes(i).length">
+                                    {{i.ctype | getLabel:settings.placeconf.allowed_types}}</div>
+                                <div class="btn-group" dropdown
+                                    ng-show="i.permissions.typeChange && getOtherAllowedTypes(i).length">
+                                    <button type="button" class="btn btn-xs btn-default dropdown-toggle">
+                                        {{i.ctype | getLabel:settings.placeconf.allowed_types}}
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li ng-repeat="t in getOtherAllowedTypes(i)"><a href="javascript:void(0)"
+                                                ng-click="setItemType(i,t.key)"
+                                                ng-hide="i.ctype == t.key">{{t.label}}</a></li>
+                                    </ul>
+                                </div>
+
+
+
+                            </div>
+
+                            <button class="btn btn btn-primary" type="button" ng-click="submitItem(i,$event)"
+                                ng-show='i.editready && !i.submitting' title="save data"><i class="fa fa-check"></i>
+                                OK</button>
+
+                            <div ng-hide='i.editready && !i.submitting'><img src="/Mwerkzeug/images/loading.gif"
+                                    width="16" height="11" alt="Loading"></div>
+
+                            <div ng-show='i.editready'>&nbsp;</div>
+
+                            <button class="btn btn-xs btn-default pull-right" type="button" ng-click="cancelItem(i)"
+                                title="cancel editing"><i class="fa fa-times"></i> <span
+                                    translate>label_cancel</span></button>
+                        </span>
+
+                        <span ng-hide="globalEditMode">
+
+                            <input ng-show="list.permissions.c4p_multiselect && i.permissions.delete" type='checkbox'
+                                class='pull-right' ng-model='i.selected' ng-click='handleSelectBox(i,$event)'
+                                ng-change='updateSelectedItems()'>
+                            <div class='c4p-ctype' title="{{i.nice_ctype}}">
+                                <span ng-show="i.is_alias"><i class="fa fa-mail-forward"></i> </span>
+                                <span><i class="fa fa-cube"></i></span>
+                                <span>{{i.ctype | getLabel:settings.placeconf.allowed_types}}</span>
+                                <span ng-show="i.locked"><i class="fa fa-lock"></i> </span> </div>
+
+                            <span ng-hide='i.locked || i.is_alias || !i.permissions.editChildren'>
+                                <button class="btn btn-sm btn-primary" type="button" ng-click="editItem(i,{})"
+                                    title="{{'label_editChildren' | translate}}" ng-show="i.config._children"><i
+                                        class="fa fa-pencil"></i> </button>
+                            </span>
+
+                            <span ng-hide='i.locked || i.is_alias || !i.permissions.edit'>
+                                <button ng-hide="i.config.no_editfields" class="btn btn-sm btn-primary" type="button"
+                                    ng-click="editItem(i,{force:true},$event)"
+                                    ng-attr-title="{{'label_editItem' | translate}}"><i class="fa"
+                                        ng-class="(i.config._children||i.config.childgroups)?'fa-cog':'fa-pencil'"></i></button>
+                            </span>
+
+                            <button class="btn btn-sm btn-default" type="button" ng-click="removeItems(i)"
+                                ng-attr-title="{{'label_removeItem' | translate}}" ng-show='i.permissions.delete'><i
+                                    class="fa fa-trash-o"></i> </button>
+
+                            <div class="btn-group" dropdown ng-show='i.permissions.actionmenu'>
+                                <button type="button" class="btn btn-sm btn-default dropdown-toggle">
+                                    <i class="fa-ellipsis-h fa"></i>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li ng-show='i.permissions.duplicate && !i.is_alias'><a href="javascript:void(0)"
+                                            ng-click="duplicateItem(i)"><i class="fa fa-copy"></i> <span
+                                                translate>label_duplicateItem</span></a></li>
+                                    <li ng-show='i.permissions.copy'><a href="javascript:void(0)"
+                                            ng-click="copyItem(i)"><i class="fa fa-clipboard"></i> <span
+                                                translate>label_copyItemToClipboard</span></a></li>
+                                    <li ng-show="i.permissions.copyAsAlias && !i.is_alias"><a href="javascript:void(0)"
+                                            ng-click="copyaliasItem(i)"><i class="fa fa-mail-forward"></i> <i
+                                                class="fa fa-clipboard"></i> <span
+                                                translate>label_copyAsAliasItem</span></a></li>
+                                    <li ng-show='i.permissions.hide && !i.hidden'><a href="javascript:void(0)"
+                                            ng-click="hideItem(i)"><i class="fa fa-eye-slash"></i> <span
+                                                translate>label_hideItem</span></a></li>
+                                    <li ng-show='i.permissions.unhide && i.hidden'><a href="javascript:void(0)"
+                                            ng-click="unhideItem(i)"><i class="fa fa-eye"></i> <span
+                                                translate>label_unhideItem</span></a></li>
+                                </ul>
+                            </div>
+
+                        </span>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <div class="c4p-after" ng-hide="listMode!='list' || listStatus=='loading' || globalEditMode">
+        <button ng-show="isAddingPossible && list.permissions.c4p_add" class="btn btn-sm btn-primary " type="button"
+            ng-click="addItem(null)" ng-disabled="showAddArea=='item_'"><i class="fa fa-plus"></i> <span
+                translate>label_addItem</span></button>
+
+        <span c4p-create-item-type-chooser ng-if="showAddArea=='item_'"><i class="fa fa-plus"></i> add my item</span>
+
+        <div class="pull-right">
+            <button class="btn btn-xs btn-primary" type="button" ng-disabled="multiActionLoading"
+                ng-click="pasteItems($event,{'append':true})"
+                ng-show="app.serverinfo.clipboardsize && list.permissions.c4p_add"><i class="fa fa-long-arrow-down"></i>
+                <span translate
+                    translate-values='{{ {num:app.serverinfo.clipboardsize} }}'>label_paste_n_items</span></button>
+        </div>
+
+    </div>
+
+    <div ng-bind-html="settings.placeconf.bottomHtml|trusted"></div>
+
+</div>
