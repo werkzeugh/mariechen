@@ -1,36 +1,14 @@
-<div class="product-detail">
+<div class="product-detail topcontainer">
 
 
-    <div class="detail-thumbnails">
-
-        <div class="thumbnail-container">
-            <a href="javascript:history.back()"><i class='fal fa-arrow-left'></i></a>
-            <bagdetail-thumbnails class="vueapp-bagdetail">
-
-            </bagdetail-thumbnails>
-        </div>
-    </div>
-    <div class="detail-left">
-
-        <bagdetail-imagelist class="vueapp-bagdetail">
-            <% loop  Product.getImagesWithTagIds() %>
-            <img src="$img.Link" width="10" tags="$tagIdString" dbid="$img.ID" bigsrc="$bigimg.Link"
-                smallsrc="$smallimg.Link" />
-            <% end_loop %>
-        </bagdetail-imagelist>
-    </div>
-
-    <div class="detail-right">
-        <div class="product-info">
             <h2>
                 {$Product.getTranslated('Title')}
             </h2>
-            <h1>
-                {$Product.getTranslated('Config_GoogleTitle')}
-            </h1>
             <div class="price">
                 {$Product.Price} &euro;
             </div>
+
+            {$ShortText}
 
             <% if  $Product.getTranslated('Material') %>
             <div>&nbsp;</div>
@@ -46,14 +24,7 @@
             </div>
             <% end_if %>
 
-            <% if  $Product.getTranslated('StrapLength') %>
-            <div>
-            <label class="label-Dimensions">$trans('Strap-Length','Riemenlänge'):</label>
-                <div class="factblock">
-                {$Product.StrapLength_de}<% if  CurrentLanguage=="en" %><div>{$Product.StrapLength}</div><% end_if %>
-                </div>
-            </div>
-            <% end_if %>
+    
 
             <% if  $Product.getTranslated('Weight') %>
             <div>
@@ -65,29 +36,17 @@
             <% end_if %>
             <div>&nbsp;</div>
 
-            <label class="label-color">$trans('Colour','Farbe'):</label>
 
-            <bagdetail-variants class="vueapp-bagdetail" current-variant-id="$currentVariantId">
-                <% loop Product.getUnHiddenProductVariantsWithColors %>
-                <a href="$variant.Link" name="$variant.Title" dbid="$variant.ID" imgs="$imgIdString" instock="$variant.InStock"
-                    colorstr="$colorString">$variant.Title</a>
-                <% end_loop %>
-            </bagdetail-variants>
+            <h1>
+                {$Product.getTranslated('Config_GoogleTitle')}
+            </h1>
 
+     
             <div class="description bodytext typography">
                 $Product.Text
             </div>
 
 
         </div>
-    </div>
+    
 
-
-
-
-
-
-
-</div>
-
-{$getCodeForProductDetailWidgets.RAW}

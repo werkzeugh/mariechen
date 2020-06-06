@@ -15,21 +15,6 @@
         v-show="selectedShopItem.listPrice"
       >nur</span>{{selectedShopItem.price}} <i class='fa fa-euro'></i></div>
 
-    <!-- <div
-      class='kennenlernprice'
-      v-show="settings.showKennenlernPrice && selectedShopItem.kennenlernPrice"
-    >
-      <a
-        href='/de/20-kennenlern-einkauf/'
-        target="_blank"
-      >Kennenlernpreis:</a>
-      <span>{{selectedShopItem.kennenlernPrice}} <i class='fa fa-euro'></i></span>
-      <a
-        href='/de/20-kennenlern-einkauf/'
-        target="_blank"
-      ><i class='fa fa-info-circle fa-lg'></i></a>
-    </div> -->
-
     <div class="infoline">inkl. 20% MWST zzgl. <a
         href="/de/kundenservice/versand/"
         target="_blank"

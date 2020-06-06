@@ -60,13 +60,8 @@ tags from product:
                     {$Parent.ProductNr}<br>$VariantNr
                 </td>
                 <td>
-                <% if $InStock=="" %>
-                <div class="alert alert-danger">
-                    not found in Texcom
-                </div>
-<% else %>
+       
                     $InStock
-<% end_if %>
                 </td>
                 <td>
     

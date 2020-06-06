@@ -19,14 +19,14 @@ l[1] = lib.addRow(l[0]);
 
 
 [
-    ['cd /www/evablut', 'yarn --cwd engine_src/baglist serve'],
-    ['cd /www/evablut', 'git status', 'echo "open https://shop.evablut.com.test/" '],
-    ['cd /www/evablut', 'ssh  -t root@vserver3.werkzeugh.at', 'cd /www/evablut;git status'],
+    ['cd /www/mariechen', 'yarn --cwd engine_src/baglist serve'],
+    ['cd /www/mariechen', 'git status', 'echo "open https://shop.mariechen.com.test/" '],
+    ['cd /www/mariechen', 'ssh  -t root@vserver3.werkzeugh.at', 'cd /www/mariechen;git status'],
 ].reduce(lib.sendCmds, l);
 
 [
-    ['cd /www/evablut_ex', 'iex -S mix phx.server'],
-    ['cd /www/evablut', 'Mwerkzeug/bin/local_db.sh'],
-    ['cd /www/evablut_ex', 'ssh  -t root@vserver3.werkzeugh.at', 'cd /www/evablut_ex; git status'],
-    // ['cd /www/evablut', 'ssh  -t root@vserver3.werkzeugh.at', ],
+    ['cd /www/mariechen_ex', 'iex -S mix phx.server'],
+    ['cd /www/mariechen', 'Mwerkzeug/bin/local_db.sh'],
+    ['cd /www/mariechen_ex', 'ssh  -t root@vserver3.werkzeugh.at', 'cd /www/mariechen_ex; git status'],
+    // ['cd /www/mariechen', 'ssh  -t root@vserver3.werkzeugh.at', ],
 ].reduce(lib.sendCmds, r);

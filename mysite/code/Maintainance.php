@@ -73,7 +73,7 @@ class MaintainanceController extends BackendPageController
     {
         $name=basename($f->Filename);
         $old_file=$f->getAbsoluteFilename();
-        $new_file="/www/evablut/files/.protected/import/".$name;
+        $new_file="/www/mariechen/files/.protected/import/".$name;
         if (file_exists($new_file)) {
             echo " ✔ $old_file ".filesize($new_file)."&gt;".filesize($old_file);
             if (filesize($new_file) > filesize($old_file)) {
@@ -104,7 +104,7 @@ class MaintainanceController extends BackendPageController
 
         die("\n\n<pre>mwuits-debug 2019-09-11_23:15 ".print_r(0, true));
 
-        $db=DBMS:: setConfForType('legacy', "localhost", "root", "root", "evablut_legacy");
+        $db=DBMS:: setConfForType('legacy', "localhost", "root", "root", "mariechen_legacy");
 
         $db=DBMS::getMdb('legacy');
 

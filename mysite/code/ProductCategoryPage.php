@@ -9,9 +9,6 @@ class ProductCategoryPage extends GenericHolderPage
     private static $db= array(
         'ShortText'          =>'Text',
         'ShortText_en'       =>'Text',
-        'Discount'           =>'IntNull',
-        'KennenlernDiscount' =>'IntNull',
-        'MaxDiscount'        =>'IntNull',
 
     );
 

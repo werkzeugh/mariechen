@@ -233,16 +233,12 @@ class ProductVariantBEController extends PageBEController
         $p['label']="Name <i>(german, optional)</i>";
         $this->formFields[$p['fieldname']]=$p;
         
-        $p=array(); // ------- new field --------
-        $p['fieldname']="VariantNr";
-        $p['label']="Texcom Bezeichnung";
-        $this->formFields[$p['fieldname']]=$p;
 
-        // $p=array(); // ------- new field --------
-        // $p['fieldname']="InStock";
-        // $p['label']="Lagerstand";
-        // $p['readonly']=1;
-        // $this->formFields[$p['fieldname']]=$p;
+        $p=array(); // ------- new field --------
+        $p['fieldname']="InStock";
+        $p['label']="Lagerstand";
+        $p['readonly']=1;
+        $this->formFields[$p['fieldname']]=$p;
 
         
         $p=array(); // ------- new field --------

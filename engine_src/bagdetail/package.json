@@ -5,7 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "sync": "rsync -av --copy-links --delete-after /www/evablut/engine/bagdetail/ root@vserver3.werkzeugh.at:/www/evablut/engine/bagdetail/",
+    "sync": "rsync -av --copy-links --delete-after /www/mariechen/engine/bagdetail/ root@vserver3.werkzeugh.at:/www/mariechen/engine/bagdetail/",
     "prod": "yarn run build;yarn run sync;yarn run serve"
   },
   "dependencies": {

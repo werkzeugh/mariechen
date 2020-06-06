@@ -1,16 +1,16 @@
 
-https://shop.evablut.com.test
+https://shop.mariechen.com.test
 
 yarn --cwd engine_src/eb_backend serve
 
 
- mysqldump -u evablut -ppong.mang.maut.ilip evablut | gzip > /tmp/dump.sql.gz
+ mysqldump -u mariechen -ppong.mang.maut.ilip mariechen | gzip > /tmp/dump.sql.gz
  scp   root@vserver3.werkzeugh.at:/tmp/dump.sql.gz /tmp/dump.sql.gz
- gzcat /tmp/dump.sql.gz | mysql -u webserver -ptorm.avamanche.polx evablut 
+ gzcat /tmp/dump.sql.gz | mysql -u webserver -ptorm.avamanche.polx mariechen 
  
   cmd="php vendor/silverstripe/framework/cli-script.php BE/Maintainance/preloadimages"
    while true; do $cmd; sleep 5; done
    
    danach phoenix-engine neu starten
    
-rsync -av /www/evablut/node_modules 
+rsync -av /www/mariechen/node_modules 

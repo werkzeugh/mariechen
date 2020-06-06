@@ -24,8 +24,6 @@ ini_set('date.timezone', 'Europe/Vienna');  //mwuits
 //DataObject::add_extension(Member::class, 'MysiteUserRole');
 
 Member::add_extension(MysiteUserRole::class);
-ProductCategoryPage::add_extension(ShopDiscountExtension::class);
-ProductPage::add_extension(ShopDiscountExtension::class);
 
 MwShop::setConf('CheckoutPage', 'de/cart');
 MwShop::setConf('MerchantEmail', 'werkzeugh@gmail.com');

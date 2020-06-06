@@ -14,41 +14,25 @@ use SilverStripe\Core\Environment;
 class ProductPage extends Page
 {
     private static $db= array(
-        'Title_de'         =>'Varchar(255)',
         'Text'              =>'HTMLText',
-        'Text_de'           =>'HTMLText',
         'FileFolderName'    =>'Varchar(255)',
         'ProductNr'         =>'Varchar(255)',
         'SeoTitle'         =>'Text',
-        'SeoTitle_de'      =>'Text',
         'ShortText'         =>'Text',
-        'ShortText_de'      =>'Text',
         'Preisdarstellung'  =>"Enum('Liste,Dropdown-Box','Liste')",
         'C4Pjson_ShopItems' =>'Text',
         'C4Pjson_Pictures'  =>'Text',
         'Material'          =>'Text',
-        'Material_de'       =>'Text',
         'Dimensions'         =>'Text',
-        'Dimensions_de'      =>'Text',
         'Weight'            =>'Text',
-        'Weight_de'         =>'Text',
-        'StrapLength'       =>'Text',
-        'StrapLength_de'    =>'Text',
         'Discount'          =>'IntNull',
         'InStockType'       =>"Enum('Typ1,Typ2,Typ3','Typ1')",
-        'KennenlernDiscount'=>'IntNull',
-        'MaxDiscount'       =>'IntNull',
         'Price'             =>'Decimal(8,2)',
-        'PriceMin'          =>'Float',
-        'PriceMax'          =>'Float',
         'Keywords'          =>'Varchar(255)',
-        'DiscountCache'     =>'IntNull',
         'NewTags'           =>'Varchar(255)',
     );
     
     private static $defaults=array(
-        'MaxDiscount'=>'20',
-        'KennenlernDiscount'=>'20',
         'NewTags'           =>'',
         
     );
@@ -202,87 +186,8 @@ class ProductPage extends Page
         return $discount;
     }
 
-    public function myKennenlernDiscount()
-    {
-        //kennenlernrabatt-value ohne rabattcode, mit berücksichtigung von max-limits
-    
-        $discount=$this->owner->FallbackedDiscountValue('KennenlernDiscount');
-        $maxdiscount=$this->owner->FallbackedDiscountValue('MaxDiscount');
-    
-        if ($discount>$maxdiscount) {
-            return $maxdiscount;
-        }
-    
-        return $discount;
-    }
 
     // -----------------------------------
-
-
-    public function ShowDiscountedPrice() // wether to show a discounted price
-    {
-        if (!isset($this->cache[__FUNCTION__])) {
-            $this->cache[__FUNCTION__]=($this->myDiscount()>0);
-        }
-        return $this->cache[__FUNCTION__];
-    }
-
-
-    public function ShowKennenlernPrice()// wether to show a kennenlern-price
-    {
-        if (!isset($this->cache[__FUNCTION__])) {
-            $this->cache[__FUNCTION__]=($this->KennenlernPrice && $this->KennenlernPrice < $this->DiscountedPrice);
-        }
-        return $this->cache[__FUNCTION__];
-    }
-
-    // -----------------------------------
-
-
-    public function getKennenlernPrice()
-    {
-        if ($this->myKennenlernDiscount()) {
-            $kennenlernprice=$this->PriceMin-($this->PriceMin * ($this->myKennenlernDiscount()/100));
-        
-            if ($kennenlernprice<$this->DiscountedPrice) {
-                return $kennenlernprice;
-            }
-        }
-    }
-
-    public function getDiscountedPrice()
-    {
-        if ($this->myDiscount()) {
-            return $this->PriceMin-($this->PriceMin * ($this->myDiscount()/100));
-        } else {
-            return $this->PriceMin;
-        }
-    }
-
-    // -----------------------------------
-
-    public function KennenlernPriceStr()
-    {
-        if ($this->KennenlernPrice) {
-            $str=MwShop::formatPrice($this->KennenlernPrice);
-        
-            if ($this->PriceMin<$this->PriceMax) {
-                $str="ab $str";
-            }
-            return $str;
-        }
-    }
-
-
-    public function DiscountedPriceStr()
-    {
-        $str=MwShop::formatPrice($this->DiscountedPrice);
-    
-        if ($this->PriceMin<$this->PriceMax) {
-            $str="ab $str";
-        }
-        return $str;
-    }
 
     // -----------------------------------
 
@@ -493,22 +398,6 @@ class ProductPage extends Page
         
     public function getTranslated($name)
     {
-        if ($GLOBALS['CurrentLanguage']=='de') {
-            switch ($name) {
-                    case 'Title':
-                    case 'Text':
-                    case 'SeoTitle':
-                    case 'Dimensions':
-                    case 'Material':
-                    case 'StrapLength':
-                    case 'Weight':
-                        $val=parent::getField($name."_de");
-                        if ($val) {
-                            return $val;
-                        }
-                    break;
-            }
-        }
         return parent::getTranslated($name);
     }
 }
@@ -521,10 +410,6 @@ class ProductPage extends Page
                 {
                     
                     // Requirements::javascript("bower_components/angular-14/angular.min.js");
-                    Requirements::javascript("mysite/ng/shopitemlist/js/shopitemlist.js");
-                    Requirements::css("bower_components/font-awesome/css/font-awesome.min.css");
-                    
-                    Requirements::javascript('mysite/thirdparty/topup/javascripts/top_up.js');
                     
                     
                     return parent::index($request);
@@ -562,15 +447,7 @@ class ProductPage extends Page
                             'maxAmount'=>0
                         );
                         
-                        if ($this->ShowDiscountedPrice()) {
-                            $item['listPrice']=$si->formattedPrice($si->myBasePrice());
-                            $item['price']=$si->formattedPrice($si->myDiscountedPrice());
-                        } else {
-                            $item['price']=$si->formattedPrice($si->myBasePrice());
-                        }
-                        if ($this->ShowKennenlernPrice()) {
-                            $item['kennenlernPrice']=$si->formattedPrice($si->getKennenlernPrice());
-                        }
+                     
                         
                         $item['inStock']=$si->InStock*1;
                         if ($si->InStock>0) {
@@ -597,8 +474,6 @@ class ProductPage extends Page
                     $ret['shopItems']=$this->getShopItems();
                     $ret['isHidden']=($this->dataRecord->Hidden)?true:false;
                     $ret['zeroStockInfo']=$this->dataRecord->AvailabilityInfoForZeroStock();
-                    $ret['showDiscountedPrice']=$this->dataRecord->ShowDiscountedPrice();
-                    $ret['showKennenlernPrice']=$this->dataRecord->ShowKennenlernPrice();
                     $ret['productId']=$this->dataRecord->ID;
                     $ret['baseurl']=$this->Link();
                     return $this->quotesafe(json_encode($ret));
@@ -717,11 +592,6 @@ class ProductPage extends Page
                     $p['label']="Name";
                     $this->formFields[$p['fieldname']]=$p;
                     
-                    $p=array(); // ------- new field --------
-                    $p['fieldname']="Title_de";
-                    $p['label']="Name <em class='lang'>de</em>";
-                    $this->formFields[$p['fieldname']]=$p;
-                    
                     
                     $p=array(); // ------- new field --------
                     $p['fieldname']="URLSegment";
@@ -734,10 +604,6 @@ class ProductPage extends Page
                     $p['label']="Material";
                     $this->formFields[$p['fieldname']]=$p;
                     
-                    $p=array(); // ------- new field --------
-                    $p['fieldname']="Material_de";
-                    $p['label']="Material <em class='lang'>de</em>";
-                    $this->formFields[$p['fieldname']]=$p;
 
                     
                     $p=array(); // ------- new field --------
@@ -745,10 +611,6 @@ class ProductPage extends Page
                     $p['label']="Dimensions";
                     $this->formFields[$p['fieldname']]=$p;
                     
-                    $p=array(); // ------- new field --------
-                    $p['fieldname']="Dimensions_de";
-                    $p['label']="Dimensions <i>in cm</i> <em class='lang'>de</em>";
-                    $this->formFields[$p['fieldname']]=$p;
 
 
                     $p=array(); // ------- new field --------
@@ -756,21 +618,9 @@ class ProductPage extends Page
                     $p['label']="Weight";
                     $this->formFields[$p['fieldname']]=$p;
                     
-                    $p=array(); // ------- new field --------
-                    $p['fieldname']="Weight_de";
-                    $p['label']="Weight <em class='lang'>de</em>";
-                    $this->formFields[$p['fieldname']]=$p;
 
 
-                    $p=array(); // ------- new field --------
-                    $p['fieldname']="StrapLength";
-                    $p['label']="Strap-Length";
-                    $this->formFields[$p['fieldname']]=$p;
-                    
-                    $p=array(); // ------- new field --------
-                    $p['fieldname']="StrapLength_de";
-                    $p['label']="StrapLength <em class='lang'>de</em>";
-                    $this->formFields[$p['fieldname']]=$p;
+                   
 
                     
 
@@ -820,14 +670,14 @@ class ProductPage extends Page
                     $p['html']="<eb-tag-viewer class='vueapp-eb_backend' tagids='$TagIdString'></eb-tag-viewer>".TagEngine::singleton()->getCodeForBackendWidgets();
                     $this->formFields[$p['fieldname']]=$p;
                     
-                    // //define all FormFields for step "Title"
-                    //     $p=array(); // ------- new field --------
-                    //     $p['label']="Short Text";
-                    // $p['type']="textarea";
-                    // $p['styles']="height:100px";
-                    // $p['fieldname']="ShortText";
-                    // // $p['rendertype']='beneath';
-                    // $this->formFields[$p['fieldname']]=$p;
+                    //define all FormFields for step "Title"
+                        $p=array(); // ------- new field --------
+                        $p['label']="Short Text";
+                    $p['type']="textarea";
+                    $p['styles']="height:100px";
+                    $p['fieldname']="ShortText";
+                    // $p['rendertype']='beneath';
+                    $this->formFields[$p['fieldname']]=$p;
                     
                     
                     // //define all FormFields for step "Title"
@@ -867,14 +717,7 @@ class ProductPage extends Page
                     // $this->formFields[$p['fieldname']]=$p;
                     
                     
-                    // //define all FormFields for step "Title"
-                    // $p=Array(); // ------- new field --------
-                    // $p['label']="Short Text <em class='lang'>en</em>";
-                    // $p['type']="textarea";
-                    // $p['styles']="height:100px;width:500px";
-                    // $p['fieldname']="ShortText_de";
-                    // $p['rendertype']='beneath';
-                    // $this->formFields[$p['fieldname']]=$p;
+                 
                     
                     //define all FormFields for step "Title"
                     $p=array(); // ------- new field --------
@@ -887,18 +730,7 @@ class ProductPage extends Page
                     $this->formFields[$p['fieldname']]=$p;
                     
                     
-                    
-                    //define all FormFields for step "Title"
-                    $p=array(); // ------- new field --------
-                    $p['label']="Description <em class='lang'>de</em>";
-                    $p['type']="textarea";
-                    $p['styles']="height:300px;width:500px";
-                    $p['fieldname']="Text_de";
-                    $p['addon_classes']="tinymce";
-                    // $p['rendertype']='beneath';
-                    $this->formFields[$p['fieldname']]=$p;
-                    
-                    
+                  
                     // //define all FormFields for step "Title"
                     // $p=array(); // ------- new field --------
                     // $p['fieldname']="FileFolderName";
@@ -1056,14 +888,6 @@ class ProductPage extends Page
                 
                 
                 
-                public function getKennenlernPrice()
-                {
-                    if ($this->Mainrecord->myKennenlernDiscount()) {
-                        return $this->myBasePrice()-($this->myBasePrice() * ($this->Mainrecord->myKennenlernDiscount()/100));
-                    }
-                }
-                
-                
                 
                 
                 public function myAmounts()
@@ -1093,10 +917,7 @@ class ProductPage extends Page
                     $p['label']     = "Artikel-Zusatz";
                     $this->formFields['left'][$p['fieldname']]=$p;
                     
-                    // $p=Array(); // ------- new field --------
-                    // $p['fieldname'] = "Title_de";
-                    // $p['label']     = "Artikel-Name <em class='lang'>en</em>";
-                    // $this->formFields['left'][$p['fieldname']]=$p;
+             
                     
                     $p=array(); // ------- new field --------
                     $p['fieldname'] = "Number";

@@ -58,7 +58,7 @@ class FrontendPage extends MwFrontendPage
     public function HTMLTitle()
     {
         $title=trim($this->getTranslated('Config_GoogleTitle'));
-        return ($title?$title:$this->MenuTitle)." - EVA BLUT";
+        return ($title?$title:$this->MenuTitle)." - mariechen";
     }
 
     public function getOgImageUrl()
@@ -144,7 +144,7 @@ class FrontendPageController extends MwFrontendPageController
         // Requirements::css("bower_components/font-awesome/css/font-awesome.min.css");
         // Requirements::javascript("mysite/thirdparty/fullsize/jquery.fullsize.minified.js");
 
-        if ($_SERVER['HTTP_HOST']=='shop.evablut.com' || strstr($_SERVER['HTTP_HOST'], 'test')) {
+        if ($_SERVER['HTTP_HOST']=='shop.mariechen.com' || strstr($_SERVER['HTTP_HOST'], 'test')) {
             $this->PageCssClasses="is-preview";
         }
     }
