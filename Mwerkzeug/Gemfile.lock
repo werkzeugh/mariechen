@@ -1,12 +1,11 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    autoprefixer-rails (6.0.3)
+    autoprefixer-rails (9.7.6)
       execjs
-      json
-    bootstrap-sass (3.3.5.1)
-      autoprefixer-rails (>= 5.0.0.1)
-      sass (>= 3.3.0)
+    bootstrap-sass (3.4.1)
+      autoprefixer-rails (>= 5.2.1)
+      sassc (>= 2.0.0)
     breakpoint (2.5.0)
       sass (~> 3.3)
       sassy-maps (< 1.0.0)
@@ -26,14 +25,15 @@ GEM
     compass-rgbapng (0.2.1)
       chunky_png (>= 0.8.0)
       compass (>= 0.10.0)
-    execjs (2.6.0)
+    execjs (2.7.0)
     ffi (1.9.10)
-    json (1.8.3)
     multi_json (1.11.2)
     rb-fsevent (0.9.6)
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
-    sass (3.4.18)
+    sass (3.4.25)
+    sassc (2.4.0)
+      ffi (~> 1.9)
     sassy-maps (0.4.0)
       sass (~> 3.3)
     susy (2.2.6)
