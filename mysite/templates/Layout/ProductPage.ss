@@ -57,13 +57,13 @@
             <div class="product-variants">
                 <% loop getProductVariants %>
                 <a href="$Link" class="product-variant">
-                    $getMainImage.SetSize(300,300)</a>
-                    <a class="info">
-                        $Title
-                        $Price
-                    </a>
+                    <img src="$getMainImage.SetSize(300,300).Link">
+                    <span class="info">
+                        <span class="p-title">$Product.Title</span>
+                        <span class="title">$Title</span>
+                        <span class="price">$PriceStr</span>
+                    </span>
                 </a>
-                
                 <% end_loop %>
             </div>
 

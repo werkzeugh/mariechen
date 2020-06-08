@@ -205,7 +205,7 @@ class ProductPage extends Page
 
     public function getProductVariants()
     {
-        return $this->Children();
+        return $this->UnHiddenChildren();
     }
 
 
@@ -595,31 +595,36 @@ class ProductPage extends Page
                     $p['label']="Name";
                     $this->formFields[$p['fieldname']]=$p;
                     
+
+                    $p              = [];
+                    $p['fieldname'] = "Config_GoogleTitle";
+                    $p['label']     = "Google Title";
+                    $this->formFields[$p['fieldname']]=$p;
                     
                     $p=array(); // ------- new field --------
                     $p['fieldname']="URLSegment";
-                    $p['label']="URL <i>Feld leer lassen ➜ automatische URL wird generiert</i>";
+                    $p['label']="Slug";
                     $this->formFields[$p['fieldname']]=$p;
 
 
-                    $p=array(); // ------- new field --------
-                    $p['fieldname']="Material";
-                    $p['label']="Material";
-                    $this->formFields[$p['fieldname']]=$p;
+                    // $p=array(); // ------- new field --------
+                    // $p['fieldname']="Material";
+                    // $p['label']="Material";
+                    // $this->formFields[$p['fieldname']]=$p;
                     
 
                     
-                    $p=array(); // ------- new field --------
-                    $p['fieldname']="Dimensions";
-                    $p['label']="Dimensions";
-                    $this->formFields[$p['fieldname']]=$p;
+                    // $p=array(); // ------- new field --------
+                    // $p['fieldname']="Dimensions";
+                    // $p['label']="Dimensions";
+                    // $this->formFields[$p['fieldname']]=$p;
                     
 
 
-                    $p=array(); // ------- new field --------
-                    $p['fieldname']="Weight";
-                    $p['label']="Weight";
-                    $this->formFields[$p['fieldname']]=$p;
+                    // $p=array(); // ------- new field --------
+                    // $p['fieldname']="Weight";
+                    // $p['label']="Weight";
+                    // $this->formFields[$p['fieldname']]=$p;
                     
 
 
@@ -629,7 +634,7 @@ class ProductPage extends Page
 
                     //define all FormFields for step "Title"
                     $p=array(); // ------- new field --------
-                    $p['label']="Price <i>(EUR,brutto)</i>";
+                    $p['label']="Price <i>(EUR, incl.VAT)</i>";
                     $p['type']="text";
                     $p['fieldname']="Price";
                     $this->formFields[$p['fieldname']]=$p;
@@ -652,26 +657,26 @@ class ProductPage extends Page
                     
                     
                     
-                    $allTagTypes=TagEngine::singleton()->getAllTagTypesString();
-                    $p=array(); // ------- new field --------
-                    $p['fieldname']="NewTags";
-                    $p['type']="hidden";
-                    $p['default_value']=TagEngine::singleton()->getTagIdStringForPage($this->record->ID);
-                    $p['label']="Eigenschaften <i>(Tags)</i>";
-                    $p['note']="(gelten für alle Produkt-Varianten)";
-                    $p['after']="<eb-tag-editor class='vueapp-eb_backend' types='$allTagTypes' ref_id='input_NewTags'></eb-tag-editor>";
-                    $this->formFields[$p['fieldname']]=$p;
+                    // $allTagTypes=TagEngine::singleton()->getAllTagTypesString();
+                    // $p=array(); // ------- new field --------
+                    // $p['fieldname']="NewTags";
+                    // $p['type']="hidden";
+                    // $p['default_value']=TagEngine::singleton()->getTagIdStringForPage($this->record->ID);
+                    // $p['label']="Tags";
+                    // $p['note']="(gelten für alle Produkt-Varianten)";
+                    // $p['after']="<eb-tag-editor class='vueapp-eb_backend' types='$allTagTypes' ref_id='input_NewTags'></eb-tag-editor>";
+                    // $this->formFields[$p['fieldname']]=$p;
                     
                     
-                    $TagIdString=TagEngine::singleton()->getTagIdStringForChildren($this->record->ID);
+                    // $TagIdString=TagEngine::singleton()->getTagIdStringForChildren($this->record->ID);
                     
-                    $p=array(); // ------- new field --------
-                    $p['fieldname']="DummyTags";
-                    $p['type']="html";
-                    $p['label']="Eigenschaften der einzelnen Produktvarianten";
-                    $p['note']="(diese sollten dann nicht bei den normalen Eigenschaften angegeben werden)";
-                    $p['html']="<eb-tag-viewer class='vueapp-eb_backend' tagids='$TagIdString'></eb-tag-viewer>".TagEngine::singleton()->getCodeForBackendWidgets();
-                    $this->formFields[$p['fieldname']]=$p;
+                    // $p=array(); // ------- new field --------
+                    // $p['fieldname']="DummyTags";
+                    // $p['type']="html";
+                    // $p['label']="Tags der einzelnen Produktvarianten";
+                    // $p['note']="(diese sollten dann nicht bei den normalen Eigenschaften angegeben werden)";
+                    // $p['html']="<eb-tag-viewer class='vueapp-eb_backend' tagids='$TagIdString'></eb-tag-viewer>".TagEngine::singleton()->getCodeForBackendWidgets();
+                    // $this->formFields[$p['fieldname']]=$p;
                     
                     //define all FormFields for step "Title"
                         $p=array(); // ------- new field --------

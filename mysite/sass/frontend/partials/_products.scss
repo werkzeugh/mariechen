@@ -1,0 +1,47 @@
+.product-variants {
+
+    margin-top: 4rem;
+    margin-bottom: 4rem;
+    display: flex;
+    flex-wrap: wrap;
+
+    $gutter: 1rem;
+    @include mx(-$gutter);
+
+    >a {
+        flex: 0 0 30%;
+        color: $c-red;
+
+        &:hover {
+            color: $c-red;
+            text-decoration: none;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+        @include mx($gutter/2);
+        @include my($gutter);
+
+        .info {
+            text-align: center;
+            border: 2px solid $c-red;
+            border-right-width: 18px;
+            display: block;
+            @include mx(2rem);
+            @include my(.5rem);
+            padding: 1rem;
+
+            .p-title {
+                font-weight: bold;
+            }
+
+            .price {
+                font-size: 1.3em;
+                font-weight: bold;
+            }
+        }
+    }
+
+}

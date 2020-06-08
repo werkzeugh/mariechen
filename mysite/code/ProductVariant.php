@@ -18,6 +18,35 @@ class ProductVariant extends Page
         return ($this->InStock>0)?"in stock":"out of stock";
     }
 
+    public function PriceStr()
+    {
+        return  $this->formatPrice($this->MyPrice());
+    }
+
+
+    public static function formatPrice($val)
+    {
+        if (strstr($val, ",")) {
+            $val=str_replace(",", ".", $val);
+        }
+        if ($val<>0) {
+            $str=number_format($val, 2, ',', '.');
+            
+            $str=str_replace(",00", ",-", $str);
+            return "€$str";
+        }
+    }
+
+    public function MyPrice()
+    {
+        if ($this->Price>0) {
+            return  $this->Price;
+        } else {
+            return  $this->Product()->Price;
+        }
+    }
+
+
 
     public function getMainImage()
     {
@@ -219,18 +248,18 @@ class ProductVariantBEController extends PageBEController
         
         //define all FormFields for step "Title"
         $p=array(); // ------- new field --------
-        $p['fieldname']="Price";
+        $p['fieldname']="Price <i>(optional, if price=0 the generic product-price is used)</i>";
         $p['label']="Preis";
         $this->formFields[$p['fieldname']]=$p;
         
         
-        $p=array(); // ------- new field --------
-        $p['fieldname']="NewTags";
-        $p['type']="hidden";
-        $p['default_value']=TagEngine::singleton()->getTagIdStringForPage($this->record->ID);
-        $p['label']="Tags";
-        $p['after']="<eb-tag-editor class='vueapp-eb_backend' types='colors,usage,material' ref_id='input_NewTags'></eb-tag-editor>".TagEngine::singleton()->getCodeForBackendWidgets();
-        $this->formFields[$p['fieldname']]=$p;
+        // $p=array(); // ------- new field --------
+        // $p['fieldname']="NewTags";
+        // $p['type']="hidden";
+        // $p['default_value']=TagEngine::singleton()->getTagIdStringForPage($this->record->ID);
+        // $p['label']="Tags";
+        // $p['after']="<eb-tag-editor class='vueapp-eb_backend' types='colors,usage,material' ref_id='input_NewTags'></eb-tag-editor>".TagEngine::singleton()->getCodeForBackendWidgets();
+        // $this->formFields[$p['fieldname']]=$p;
     }
 
        

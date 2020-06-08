@@ -11,6 +11,7 @@
 
 @import "partials/contentelements";
 
+@import "partials/products";
 @import "partials/checkout";
 @import "partials/orderhtml";
 
@@ -57,6 +58,8 @@ body {
 
 .mainheader {
   margin-top: 3rem;
+
+  margin-bottom: 10rem;
 
   .ce-inner {
     display: flex;

@@ -15,11 +15,12 @@
     }
 </style>
 
-
+<!--
 
 tags from product: 
 <eb-tag-viewer class='vueapp-eb_backend' tagids='$ProductTagsIdString'></eb-tag-viewer>
 <div>&nbsp;</div>
+-->
 
 <form method="POST">
 
@@ -36,10 +37,10 @@ tags from product:
             <tr>
                 <th><input type="checkbox" class="taggable-toggle" name="taggable_toggle" value=""></th>
                 <th>Name</th>
-                <th>Preis</th>
-                <th>Lagerstand</th>
-                <th>Tags</th>
-                <th>imgs</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <!-- <th>Tags</th> -->
+                <th>Imgs</th>
                 <th></th>
             </tr>
         </thead>
@@ -55,7 +56,7 @@ tags from product:
                     
                 </td>
                 <td>
-                   $Price
+                   $MyPrice
                 </td>
                 <td>
        
@@ -63,9 +64,9 @@ tags from product:
                 </td>
                 <td>
     
-                    <eb-tag-viewer class="vueapp-eb_backend" record="SiteTree-$ID" editable="1"
+                    <!--<eb-tag-viewer class="vueapp-eb_backend" record="SiteTree-$ID" editable="1"
                         types="colors,usage,material">
-                    </eb-tag-viewer>
+                    </eb-tag-viewer> -->
     
                 </td>
                  <td class="imagelist">
@@ -107,6 +108,5 @@ is-list-image<% end_if %>">
 <div>&nbsp;</div>
 
 
-<a class="btn btn-sm" type="button"  href="/ex/bags/update_stock">➜ Lagerstand mit Texcom abgleichen</a>
 
 

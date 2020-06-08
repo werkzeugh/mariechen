@@ -48,10 +48,7 @@ class ProductCategoryPage extends GenericHolderPage
     public $subclass='ProductPage';
 
 
-    public function allowedChildren()
-    {
-        return array($this->ClassName,$this->subclass,'ProductPageAlias','MwShopCartPage','Article','RedirectionPage');
-    }
+ 
 
     public function Products()
     {
@@ -114,6 +111,11 @@ class ProductCategoryPage extends GenericHolderPage
             return $this->Title;
         }
     }
+
+    public function getProducts()
+    {
+        return  $this->UnHiddenChildren();
+    }
 }
 
 
@@ -125,11 +127,17 @@ class ProductCategoryPageController extends GenericHolderPageController
         'ex_template',
     ];
 
+    // public function index(SilverStripe\Control\HTTPRequest $request)
+    // {
+    //     return $this->redirect($this->dataRecord->Parent()->Link());
+    // }
+
     public function index(SilverStripe\Control\HTTPRequest $request)
     {
-        return $this->redirect($this->dataRecord->Parent()->Link());
+        $c=['Products'=>$this->getProducts()];
+        
+        return $c;
     }
-
 
     public function ex_template(SilverStripe\Control\HTTPRequest $request)
     {

@@ -5400,6 +5400,41 @@ a.text-dark:hover, a.text-dark:focus {
 .overlay.txt-l > .txt {
   font-size: 3em; }
 
+.product-variants {
+  margin-top: 4rem;
+  margin-bottom: 4rem;
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: -1rem;
+  margin-right: -1rem; }
+  .product-variants > a {
+    flex: 0 0 30%;
+    color: #f00;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem; }
+    .product-variants > a:hover {
+      color: #f00;
+      text-decoration: none; }
+    .product-variants > a img {
+      max-width: 100%; }
+    .product-variants > a .info {
+      text-align: center;
+      border: 2px solid #f00;
+      border-right-width: 18px;
+      display: block;
+      margin-left: 2rem;
+      margin-right: 2rem;
+      margin-top: 0.5rem;
+      margin-bottom: 0.5rem;
+      padding: 1rem; }
+      .product-variants > a .info .p-title {
+        font-weight: bold; }
+      .product-variants > a .info .price {
+        font-size: 1.3em;
+        font-weight: bold; }
+
 .checkout-wrap {
   max-width: 700px;
   margin-left: auto;
@@ -5611,7 +5646,8 @@ body {
         width: 100%; }
 
 .mainheader {
-  margin-top: 3rem; }
+  margin-top: 3rem;
+  margin-bottom: 10rem; }
   .mainheader .ce-inner {
     display: flex;
     justify-content: space-between;
