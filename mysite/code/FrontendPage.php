@@ -8,7 +8,7 @@ use SilverStripe\Control\Controller;
 
 class FrontendPage extends MwFrontendPage
 {
-    public static $masterCacheKeyPart = '2020_03_27_041744'; // =ts\
+    public static $masterCacheKeyPart = '2020_06_08_122050'; // =ts\
 
     public function IsCurrentNav()
     {
@@ -266,13 +266,7 @@ class FrontendPageController extends MwFrontendPageController
   
     public function TopNavItems()
     {
-        if ($this->CurrentSite) {
-            $ret=$this->CurrentSite->UnHiddenChildren();
-            $home=$this->CurrentSite;
-            $home->URLSegment='home';
-            $ret->unshift($home);
-            return $ret;
-        }
+        return PageManager::getPage("/products")->UnHiddenChildren();
     }
   
   

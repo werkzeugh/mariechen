@@ -41,8 +41,14 @@
  <% end_if %>
 
             <h2>
-                $Title
+                <strong>$Product.Title,</strong> $Title  $PriceStr
+
             </h2>
+
+
+            <div class="m-btn">
+                In den Warenkorb
+            </div> 
 
             {$ShortText}
 

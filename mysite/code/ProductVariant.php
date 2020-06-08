@@ -69,7 +69,7 @@ class ProductVariant extends Page
         'Text'              =>'HTMLText',
         'Price'             =>'Decimal(8,2)',
         'NewTags'           =>'Varchar(255)',
-        'VariantNr'         =>'Varchar(255)',
+        'Sku'               =>'Varchar(255)',
         'InStock'           =>'IntNull',
         'EffectiveStock'    =>'IntNull',
         'ImageIds'          =>'Varchar(255)',
@@ -217,6 +217,11 @@ class ProductVariantBEController extends PageBEController
         $p['label']="Name";
         $this->formFields[$p['fieldname']]=$p;
         
+        
+        $p=array(); // ------- new field --------
+        $p['fieldname']="Sku";
+        $p['label']="SKU <i>product-nr</i>";
+        $this->formFields[$p['fieldname']]=$p;
         
 
         $p=array(); // ------- new field --------

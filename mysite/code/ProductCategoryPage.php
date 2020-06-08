@@ -111,11 +111,6 @@ class ProductCategoryPage extends GenericHolderPage
             return $this->Title;
         }
     }
-
-    public function getProducts()
-    {
-        return  $this->UnHiddenChildren();
-    }
 }
 
 
@@ -134,8 +129,7 @@ class ProductCategoryPageController extends GenericHolderPageController
 
     public function index(SilverStripe\Control\HTTPRequest $request)
     {
-        $c=['Products'=>$this->getProducts()];
-        
+        $c=['Products'=>$this->Products()];
         return $c;
     }
 

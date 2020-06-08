@@ -1,47 +1,99 @@
-.product-variants {
+.product-list {
 
-    margin-top: 4rem;
+    page.page-ProductCategoryPage & {
+        margin-top: 2rem;
+    }
+
+    page.page-ProductPage &,
+    page.page-ProductVariant & {
+        margin-top: 2rem;
+    }
+
     margin-bottom: 4rem;
     display: flex;
     flex-wrap: wrap;
+    align-items: stretch;
 
-    $gutter: 1rem;
+    $gutter: 3rem;
     @include mx(-$gutter);
 
     >a {
-        flex: 0 0 30%;
+        flex: 0 0 33.33%;
         color: $c-red;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
 
         &:hover {
             color: $c-red;
             text-decoration: none;
         }
 
-        img {
-            max-width: 100%;
+        >.img {
+            flex: 0 0 auto;
+            height: 0;
+            overflow: hidden;
+            padding-top: 100%;
+            position: relative;
+
+            img {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+            }
         }
 
-        @include mx($gutter/2);
-        @include my($gutter);
+        @include px($gutter/2);
+        @include py($gutter);
 
-        .info {
-            text-align: center;
-            border: 2px solid $c-red;
-            border-right-width: 18px;
-            display: block;
-            @include mx(2rem);
-            @include my(.5rem);
-            padding: 1rem;
 
-            .p-title {
+        .content {
+            flex: 1 1 auto;
+            padding-top: 1.5rem;
+
+            .title {
                 font-weight: bold;
+                display: block;
             }
 
             .price {
                 font-size: 1.3em;
                 font-weight: bold;
+                display: block;
+                text-align: right;
             }
         }
+
+        .m-btn {
+            flex: 0 0 auto;
+            margin-top: 2rem;
+        }
+
+
     }
 
+}
+
+
+.m-btn {
+    display: inline-block;
+    text-align: center;
+    border: 2px solid $c-red;
+    border-right-width: 18px;
+    display: block;
+    @include mx(2rem);
+    @include my(.5rem);
+    padding: 1rem;
+
+    .p-title {
+        font-weight: bold;
+    }
+
+    .price {
+        font-size: 1.3em;
+        font-weight: bold;
+    }
 }

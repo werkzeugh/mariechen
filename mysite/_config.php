@@ -33,7 +33,7 @@ MwShop::setConf('SofortConfigKey', '62263:140692:9f2b1b70c2f0ea3e73b7c7ed4382954
 MwFile::add_extension(MysiteFileExtension::class);
 
 
-MwPage::setConf('allowedPageClasses', 'Article,TagNode');
+MwPage::setConf('allowedPageClasses', 'Article,TagNode,ProductPage,ProductVariant,ProductCategoryPage');
 MwPage::setConf('UseFramesInBE', true);
 
 MwUser::setConf('disable_usernames', true);

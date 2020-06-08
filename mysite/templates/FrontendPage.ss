@@ -96,10 +96,15 @@
 
     </header>
 
-
-
-
     <% end_with %>
+
+    <nav class="topcontainer topnav">
+            <% loop TopNavItems %>
+                    <a href="$Link" class="$CssClass">$MenuTitle</a>
+            <% end_loop %>
+    </nav>
+
+
     <div class="content-container">
 
         <div role="main" id="main-content" class="main-content <% if  hasNavCol %>has-navcol<% end_if %>">

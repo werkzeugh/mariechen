@@ -35,8 +35,10 @@ tags from product:
 
         <thead>
             <tr>
-                <th><input type="checkbox" class="taggable-toggle" name="taggable_toggle" value=""></th>
+                <!-- <th><input type="checkbox" class="taggable-toggle" name="taggable_toggle" value=""></th> -->
+                <th></th>
                 <th>Name</th>
+                <th>SKU</th>
                 <th>Price</th>
                 <th>Stock</th>
                 <!-- <th>Tags</th> -->
@@ -48,12 +50,17 @@ tags from product:
             <% loop Variants %>
     
             <tr class="js-sortable-tr" data-id="$ID">
-                <td class="taggable-cb-td">
-                    <input type="checkbox" class="taggable-cb" name="taggable_ids[]" value="SiteTree-$ID">
+                <!--<td class="taggable-cb-td">
+                    <input type="checkbox" class="taggable-cb" name="taggable_ids[]" value="SiteTree-$ID"> 
+                </td>-->
+                <td>
+                    <a href="$EditLink" class="btn btn-default btn-xs"><i class="fa fa-pencil"></i></a> 
                 </td>
                 <td class="<% if  $Hidden %>is-hidden<% end_if %>">
-                    <a href="$EditLink" class="btn btn-default btn-xs"><i class="fa fa-pencil"></i></a> $Title
-                    
+                     $Title
+                </td>
+                <td class="<% if  $Hidden %>is-hidden<% end_if %>">
+                  $Sku
                 </td>
                 <td>
                    $MyPrice
