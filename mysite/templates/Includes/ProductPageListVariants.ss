@@ -36,7 +36,7 @@ tags from product:
             <tr>
                 <th><input type="checkbox" class="taggable-toggle" name="taggable_toggle" value=""></th>
                 <th>Name</th>
-                <th>Texcom-ID</th>
+                <th>Preis</th>
                 <th>Lagerstand</th>
                 <th>Tags</th>
                 <th>imgs</th>
@@ -50,14 +50,12 @@ tags from product:
                 <td class="taggable-cb-td">
                     <input type="checkbox" class="taggable-cb" name="taggable_ids[]" value="SiteTree-$ID">
                 </td>
-                <td>
-                    <a href="$EditLink" class="<% if  $Hidden %>is-hidden<% end_if %>">$Title</a> 
-                    <div>
-                        $Title_de
-                    </div>
+                <td class="<% if  $Hidden %>is-hidden<% end_if %>">
+                    <a href="$EditLink" class="btn btn-default btn-xs"><i class="fa fa-pencil"></i></a> $Title
+                    
                 </td>
                 <td>
-                    {$Parent.ProductNr}<br>$VariantNr
+                   $Price
                 </td>
                 <td>
        

@@ -12,6 +12,14 @@ class ProductCategoryPage extends GenericHolderPage
 
     );
 
+    public function allowedChildren()
+    {
+        return [
+                'ProductPage',
+                // 'ProductCategoryPage'
+        ];
+    }
+
     private static $has_one=array(
     //   'Brand'=>'BrandPage',
       'Picture'=>'MwFile',

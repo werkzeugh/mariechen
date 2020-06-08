@@ -411,21 +411,10 @@ class FrontendPageBEController extends BpMysitePageController
         $p['label']     = "Google Title";
         $this->formFields[$p['fieldname']]=$p;
 
-        $p              = [];
-        $p['fieldname'] = "Config_GoogleTitle_de";
-        $p['label']     = "Google Title (DE)";
-        $this->formFields[$p['fieldname']]=$p;
-
 
         $p              = [];
         $p['fieldname'] = "Config_MetaDescription";
         $p['label']     = "Meta Description";
-        $p['type']      = 'textarea';
-        $this->formFields[$p['fieldname']]=$p;
-
-        $p              = [];
-        $p['fieldname'] = "Config_MetaDescription_de";
-        $p['label']     = "Meta Description (DE)";
         $p['type']      = 'textarea';
         $this->formFields[$p['fieldname']]=$p;
 

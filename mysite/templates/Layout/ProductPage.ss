@@ -1,47 +1,78 @@
 <div class="product-detail topcontainer">
 
 
+
+
+  <div class="responsive-swiper-shiv"></div>
+
+             <div class="swiper-container" id="prodimgs">
+                 <div class="swiper-wrapper">
+                     <% loop $getImages %>
+                     <div class="swiper-slide">
+                        <img src="$SetSize(1024,1024).Link">
+                     </div>
+                     <% end_loop %>
+                 </div>
+
+                 <!-- <div class="swiper-pagination"></div> -->
+
+                 <!-- If we need navigation buttons -->
+                 <div class="swiper-button-prev"></div>
+                 <div class="swiper-button-next"></div>
+
+                 <!-- If we need scrollbar -->
+                 <!-- <div class="swiper-scrollbar"></div> -->
+             </div>
+
+
+ <% if  $getImages.Count >1 %>
+ <script>
+     $(document).ready(function () {
+         //initialize swiper when document ready
+         var mySwiper = new Swiper('#prodimgs', {
+             // Optional parameters
+             //  direction: 'vertical',
+             navigation: {
+                 nextEl: '.swiper-button-next',
+                 prevEl: '.swiper-button-prev',
+             },
+             grabCursor: true,
+             pagination: {
+                 el: '.swiper-pagination',
+                 type: 'progressbar',
+             },
+             loop: true
+         })
+     });
+ </script>
+ <% end_if %>
+
             <h2>
-                {$Product.getTranslated('Title')}
+                $Title
             </h2>
-            <div class="price">
-                {$Product.Price} &euro;
-            </div>
 
             {$ShortText}
 
-            <% if  $Product.getTranslated('Material') %>
-            <div>&nbsp;</div>
-            <label class="label-material">$trans('Material','Material'):</label>
-            {$Product.getTranslated('Material')}
-            <% end_if %>
 
-            <% if  $Product.getTranslated('Dimensions') %>
-            <br>
-            <label class="label-Dimensions">$trans('Dimensions','Maße'):</label>
-            <div class="factblock">
-               {$Product.Dimensions_de}<% if  CurrentLanguage=="en" %><div>{$Product.Dimensions}</div><% end_if %>
+            <div class="product-variants">
+                <% loop getProductVariants %>
+                <a href="$Link" class="product-variant">
+                    $getMainImage.SetSize(300,300)</a>
+                    <a class="info">
+                        $Title
+                        $Price
+                    </a>
+                </a>
+                
+                <% end_loop %>
             </div>
-            <% end_if %>
-
-    
-
-            <% if  $Product.getTranslated('Weight') %>
-            <div>
-            <label class="label-Weight">$trans('Weight','Gewicht'):</label>
-                <div class="factblock">
-                    {$Product.Weight_de}<% if  CurrentLanguage=="en" %><div>{$Product.Weight}</div><% end_if %>
-                </div>
-            </div>
-            <% end_if %>
-            <div>&nbsp;</div>
 
 
             <h1>
                 {$Product.getTranslated('Config_GoogleTitle')}
             </h1>
 
-     
+
             <div class="description bodytext typography">
                 $Product.Text
             </div>

@@ -411,7 +411,10 @@ class ProductPage extends Page
                     
                     // Requirements::javascript("bower_components/angular-14/angular.min.js");
                     
-                    
+                    Requirements::javascript("node_modules/swiper/js/swiper.min.js");
+                    Requirements::CSS("node_modules/swiper/css/swiper.min.css");
+             
+
                     return parent::index($request);
                 }
                 

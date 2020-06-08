@@ -13,11 +13,6 @@ use Tarsana\Functional as F;
 
 class ProductVariant extends Page
 {
-    public function getPrice()
-    {
-        return $this->Parent->Price;
-    }
-
     public function getStockStatus()
     {
         return ($this->InStock>0)?"in stock":"out of stock";
@@ -42,14 +37,13 @@ class ProductVariant extends Page
 
 
     private static $db= array(
-        'Title_de'           =>'Varchar(255)',
         'Text'              =>'HTMLText',
-        'Text_de'           =>'HTMLText',
         'Price'             =>'Decimal(8,2)',
         'NewTags'           =>'Varchar(255)',
         'VariantNr'         =>'Varchar(255)',
         'InStock'           =>'IntNull',
         'EffectiveStock'    =>'IntNull',
+        'ImageIds'          =>'Varchar(255)',
 
     );
     
@@ -123,52 +117,18 @@ class ProductVariant extends Page
         $allImages=$this->Parent()->getImages();
         $al=new ArrayList();
         
-        $myImgs=[];
-        $commonImgs=[];
-        $commonTagId=TagEngine::singleton()->getTagIdForSlug("common");
-        $variantTagIds=TagEngine::singleton()->getTagIdsForPage($this->ID);
-        if (array_key_exists('coro', $_GET)) {
-            if (true || array_key_exists('d', $_GET)) {
-                $x= $variantTagIds;
-                $x=htmlspecialchars(print_r($x, true));
-                echo "\n<li>mwuits: <pre>$x</pre>";
-            }
-        }
+        $myImageIds=$this->MyImageIds();
         foreach ($allImages as $img) {
-            $imgTagIds=TagEngine::singleton()->getTagIdsForFile($img->ID);
-            
-            $containsAllValues = !array_diff($variantTagIds, $imgTagIds);
-            
-            if ($containsAllValues) {
-                $addImg=true;
-                $img->isListImage=true;
-                array_push($myImgs, $img);
-                continue;
-            }
-            if (in_array($commonTagId, $imgTagIds)) {
-                array_push($commonImgs, $img);
+            if (in_array($img->ID, $myImageIds)) {
+                $al->push($img);
             }
         }
         
-        return new ArrayList(array_merge($myImgs, $commonImgs));
+        return $al;
     }
-
-
-    public function getField($name)
+    public function MyImageIds()
     {
-        if ($GLOBALS['CurrentLanguage']=='de') {
-            switch ($name) {
-                case 'Title':
-                case 'Text':
-                $val=parent::getField($name."_de");
-                    if ($val) {
-                        return $val;
-                    }
-                
-            break;
-            }
-        }
-        return parent::getField($name);
+        return explode(',', $this->ImageIds);
     }
 }
 
@@ -210,7 +170,7 @@ class ProductVariantBEController extends PageBEController
         $items=array(
             "10"    => "Product-Variant",
             // "12"     => "Product-Variants",
-            // "14"     => "Images",
+            "14"     => "Images",
             // "20"     => "Settings",
         );
         
@@ -228,10 +188,6 @@ class ProductVariantBEController extends PageBEController
         $p['label']="Name";
         $this->formFields[$p['fieldname']]=$p;
         
-        $p=array(); // ------- new field --------
-        $p['fieldname']="Title_de";
-        $p['label']="Name <i>(german, optional)</i>";
-        $this->formFields[$p['fieldname']]=$p;
         
 
         $p=array(); // ------- new field --------
@@ -243,7 +199,7 @@ class ProductVariantBEController extends PageBEController
         
         $p=array(); // ------- new field --------
         $p['fieldname']="URLSegment";
-        $p['label']="URL <i>Feld leer lassen ➜ automatische URL wird generiert</i>";
+        $p['label']="Slug";
         $this->formFields[$p['fieldname']]=$p;
         
         
@@ -261,11 +217,11 @@ class ProductVariantBEController extends PageBEController
         //  $this->formFields[$p['fieldname']]=$p;
         
         
-        // //define all FormFields for step "Title"
-        // $p=array(); // ------- new field --------
-        // $p['fieldname']="ProductNr";
-        // $p['label']="Produkt-Nr:";
-        // $this->formFields[$p['fieldname']]=$p;
+        //define all FormFields for step "Title"
+        $p=array(); // ------- new field --------
+        $p['fieldname']="Price";
+        $p['label']="Preis";
+        $this->formFields[$p['fieldname']]=$p;
         
         
         $p=array(); // ------- new field --------
@@ -275,5 +231,24 @@ class ProductVariantBEController extends PageBEController
         $p['label']="Tags";
         $p['after']="<eb-tag-editor class='vueapp-eb_backend' types='colors,usage,material' ref_id='input_NewTags'></eb-tag-editor>".TagEngine::singleton()->getCodeForBackendWidgets();
         $this->formFields[$p['fieldname']]=$p;
+    }
+
+       
+    public function step_14()
+    {
+        $c['VariantImages']=$this->getImages();
+
+        $c['ProductImages']=$this->record->Product()->getImages();
+
+        $c['RestImages']=new ArrayList();
+        $myImageIds=$this->record->MyImageIds();
+        foreach ($c['ProductImages'] as $img) {
+            if (!in_array($img->ID, $myImageIds)) {
+                $c['RestImages']->push($img);
+            }
+        }
+        
+        
+        return $this->customise($c)->renderWith("Includes/ProductVariantListImages").$html;
     }
 }

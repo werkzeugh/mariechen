@@ -28,12 +28,6 @@ images are placed in a Folder named '<b>$record.getImageFolderPath</b>' in the F
 <a href="/BE/MwFile/listing/{$record.getImageFolder.ID}/" class="btn btn-default btn-xs" target="_top">➜ go to
     File-Manager</a>
 <div>&nbsp;</div>
-
-tags from product:
-<eb-tag-viewer class='vueapp-eb_backend' tagids='$ProductTagsIdString'></eb-tag-viewer>
-<div>&nbsp;</div>
-tags from product-variants:
-<eb-tag-viewer class='vueapp-eb_backend' tagids='$VariantTagsIdString'></eb-tag-viewer>
 <div>&nbsp;</div>
 <form method="POST">
 
@@ -44,10 +38,9 @@ tags from product-variants:
     <table class="table table-bordered table-striped taggable-items">
         <thead>
             <tr>
-                <th><input type="checkbox" class="taggable-toggle" name="taggable_toggle" value=""></th>
+<!--                <th><input type="checkbox" class="taggable-toggle" name="taggable_toggle" value=""></th> -->
                 <th>Img</th>
                 <th>Title</th>
-                <th>Tags</th>
                 <th></th>
             </tr>
         </thead>
@@ -56,9 +49,9 @@ tags from product-variants:
             <% loop Images %>
 
             <tr class="js-sortable-tr" data-id="$ID">
-                <td class="taggable-cb-td">
+                <!--<td class="taggable-cb-td">
                     <input type="checkbox" class="taggable-cb" Img="taggable_ids[]" value="MwFile-$ID">
-                </td>
+                </td> -->
                 <td>
                     $SetFittedSize(100,100)
                 </td>
@@ -66,12 +59,7 @@ tags from product-variants:
                     $Title
                 </td>
 
-                <td>
-                    <eb-tag-viewer class="vueapp-eb_backend" record="MwFile-$ID" editable="1"
-                        types="colors,usage,intern">
-                    </eb-tag-viewer>
-
-                </td>
+               
                 <td class="js-sortable-handle">
                     <i class='fa fa-bars fa-lg'></i>
                 </td>
@@ -79,7 +67,6 @@ tags from product-variants:
             <% end_loop %>
         </tbody>
     </table>
-    <% include Tagabble_Items_Form %>
 </form>
 
 <% end_if %>

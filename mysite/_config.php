@@ -48,7 +48,7 @@ MwVhostMapper::addRules(
     [
    'wwwneu.' => 'home',
    'www.'    => 'home',
-   'shop.'    => 'home',
+   'mariechen.'    => 'home',
     ]
 );
 
