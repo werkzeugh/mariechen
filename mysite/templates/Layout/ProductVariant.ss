@@ -40,21 +40,22 @@
  </script>
  <% end_if %>
 
-            <h2>
-                <strong>$Product.Title,</strong> $Title  $PriceStr
 
-            </h2>
+            <div class="titlebar">
+                <h2>
+                    <strong>$Product.Title,</strong> $Title  $PriceStr
+                </h2>
+                <div class="m-btn">
+                    In den Warenkorb
+                </div> 
+            </div>
 
 
-            <div class="m-btn">
-                In den Warenkorb
-            </div> 
-
-            {$ShortText}
+            {$MyShortText}
 
 
             <div class="product-list">
-                <% loop getProductVariants %>
+                <% loop getOtherProductVariants %>
                 <a href="$Link" class="product-box">
                     <span class="img"><img src="$getMainImage.SetSize(300,300).Link"></span>
                     <span class="m-btn">

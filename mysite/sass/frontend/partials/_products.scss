@@ -1,11 +1,18 @@
+body.page-ProductPage h1,
+body.page-ProductVariant h1 {
+    margin: 0;
+    font-size: 1rem;
+    margin-bottom: 1em;
+}
+
 .product-list {
 
-    page.page-ProductCategoryPage & {
+    body.page-ProductCategoryPage & {
         margin-top: 2rem;
     }
 
-    page.page-ProductPage &,
-    page.page-ProductVariant & {
+    body.page-ProductPage &,
+    body.page-ProductVariant & {
         margin-top: 2rem;
     }
 
@@ -96,4 +103,22 @@
         font-size: 1.3em;
         font-weight: bold;
     }
+}
+
+.page-ProductVariant {
+
+    .titlebar {
+        margin-top: 4rem;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    h2 {
+        font-weight: normal;
+    }
+}
+
+
+.swiper-slide>img {
+    max-width: 100%;
 }

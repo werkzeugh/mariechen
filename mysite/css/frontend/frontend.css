@@ -5401,6 +5401,12 @@ a.text-dark:hover, a.text-dark:focus {
 .overlay.txt-l > .txt {
   font-size: 3em; }
 
+body.page-ProductPage h1,
+body.page-ProductVariant h1 {
+  margin: 0;
+  font-size: 1rem;
+  margin-bottom: 1em; }
+
 .product-list {
   margin-bottom: 4rem;
   display: flex;
@@ -5408,10 +5414,10 @@ a.text-dark:hover, a.text-dark:focus {
   align-items: stretch;
   margin-left: -3rem;
   margin-right: -3rem; }
-  page.page-ProductCategoryPage .product-list {
+  body.page-ProductCategoryPage .product-list {
     margin-top: 2rem; }
-  page.page-ProductPage .product-list,
-  page.page-ProductVariant .product-list {
+  body.page-ProductPage .product-list,
+  body.page-ProductVariant .product-list {
     margin-top: 2rem; }
   .product-list > a {
     flex: 0 0 33.33%;
@@ -5469,6 +5475,17 @@ a.text-dark:hover, a.text-dark:focus {
   .m-btn .price {
     font-size: 1.3em;
     font-weight: bold; }
+
+.page-ProductVariant .titlebar {
+  margin-top: 4rem;
+  display: flex;
+  justify-content: space-between; }
+
+.page-ProductVariant h2 {
+  font-weight: normal; }
+
+.swiper-slide > img {
+  max-width: 100%; }
 
 .checkout-wrap {
   max-width: 700px;
@@ -5697,7 +5714,7 @@ body {
     .mainheader .ce-inner div.carticon {
       flex: 1 1 20%; }
 
-h1 {
+h1.pagetitle {
   text-align: center;
   font-size: 3rem;
   margin-top: 4rem;
@@ -5707,7 +5724,8 @@ h1 {
 nav.topnav {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center; }
+  justify-content: center;
+  margin-bottom: 3rem; }
   nav.topnav > a {
     display: inline-block;
     font-weight: bold; }

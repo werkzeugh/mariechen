@@ -47,6 +47,15 @@ class ProductVariant extends Page
     }
 
 
+    public function MyShortText()
+    {
+        if ($this->ShortText) {
+            return  $this->ShortText;
+        } else {
+            return  $this->Product()->ShortText;
+        }
+    }
+
 
     public function getMainImage()
     {
@@ -159,6 +168,17 @@ class ProductVariant extends Page
     {
         return explode(',', $this->ImageIds);
     }
+
+    public function getOtherProductVariants()
+    {
+        $al=new ArrayList();
+        foreach ($this->Product()->getProductVariants() as $pv) {
+            if ($pv->ID !== $this->ID) {
+                $al->push($pv);
+            }
+        }
+        return $al;
+    }
 }
 
 
@@ -167,10 +187,12 @@ class ProductVariantController extends ProductPageController
 {
     public function index(HTTPRequest $request)
     {
-        $this->summitSetTemplateFile("Layout", "ProductPage");
-        $c['SkipMainContentDiv']=1;
+        // $this->summitSetTemplateFile("Layout", "ProductPage");
+        // $c['SkipMainContentDiv']=1;
         
-        $this->HeadAddons[]=$this->getOGHtml();
+        // $this->HeadAddons[]=$this->getOGHtml();
+        $c=[];
+        $c['Images']=$this->getImages();
         return $c;
     }
 

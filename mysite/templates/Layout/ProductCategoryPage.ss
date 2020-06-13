@@ -4,7 +4,7 @@
 
 <div class="topcontainer">
 
-<h1>$Title</h1>
+<h1 class="pagetitle">$Title</h1>
 <div class="product-list">
     
     <% loop Products %>
