@@ -3,7 +3,7 @@
   <div>
     <div class="vbe-imgfolder">
 
-      IMGFOLDER!!
+      IMGFOLDER whats going on !
     </div>
   </div>
 

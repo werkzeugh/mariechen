@@ -34,7 +34,7 @@ class VueEngine
             if (preg_match('#^https?://192\.168\.[0-9]+\.[0-9]+(:[0-9]+)?$#', array_get($_GET, 'hot'))) {
                 $baseurl=array_get($_GET, 'hot');
             }
-            return $baseurl.dirname(dirname($url)).'/'.basename($url);
+            return $baseurl.(dirname($url)).'/'.basename($url);
         } else {
             $filename=array_get($this->files, $info['fileName'], $info['fileName']);
             return $info['urlDir'].$filename;
