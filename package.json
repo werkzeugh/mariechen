@@ -1,4 +1,5 @@
 {
+  "private": true,
   "dependencies": {
     "bootstrap": "^4.4",
     "bulma": "^0.8",

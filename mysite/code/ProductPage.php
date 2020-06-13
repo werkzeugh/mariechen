@@ -530,6 +530,7 @@ class ProductPage extends Page
                 "10"    => "Product",
                 "12"     => "Product-Variants",
                 "14"     => "Images",
+                "16  "     => "ImagesNeu",
                 "23"                        => "SEO",
                 
                 // "20"     => "Settings",
@@ -582,6 +583,15 @@ class ProductPage extends Page
             $c['ProductTagsIdString']=TagEngine::singleton()->getTagIdStringForPage($this->record->ID);
             
             return $this->customise($c)->renderWith("Includes/ProductPageListVariants").$html;
+        }
+
+        
+        public function step_16()
+        {
+            $html=$this->getCodeForBackendWidgets();
+
+            return "
+            AA<vbe-imgfolder class='vueapp-vbe'></vbe-imgfolder>BB".$html;
         }
         
         public function step_14()

@@ -924,4 +924,23 @@ $js
     {
         return "/Mwerkzeug/themes/MwBackend";
     }
+
+
+
+    public function getCodeForBackendWidgets()
+    {
+
+        // $settings['baseurl']=$this->Link();
+        $settings['backendBaseUrl']='https://'.(array_key_exists('HTTP_X_ORIGINAL_HOST', $_SERVER)?$_SERVER['HTTP_X_ORIGINAL_HOST']:$_SERVER['HTTP_HOST'])."/BE";
+        $settingsAsJson=json_encode($settings);
+
+        
+        return '
+
+<script>
+window.vbeAppConf='.$settingsAsJson.';
+</script>
+<script type="text/javascript" src="'.VueEngine::singleton()->vue_helper('/Mwerkzeug/vue/vbe/dist/js/chunk-vendors.js').'"></script>
+<script type="text/javascript" src="'.VueEngine::singleton()->vue_helper('/Mwerkzeug/vue/vbe/dist/js/app.js').'"></script>';
+    }
 }
