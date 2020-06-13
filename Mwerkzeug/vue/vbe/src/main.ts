@@ -13,32 +13,35 @@ Vue.config.productionTip = false;
 Vue.use(VueRouter);
 
 let querySelector = ".vueapp-vbe";
-const appElements = Array.from(document.querySelectorAll(querySelector));
-const instances = [];
-
+const appElements: HTMLElement[] = Array.from(
+  document.querySelectorAll(querySelector)
+);
+const instances: Vue[] = [];
 
 const camelizeRE = /-(\w)/g;
-export const camelize = string => {
+export const camelize = (string: string) => {
   return string.replace(camelizeRE, (_, c) => (c ? c.toUpperCase() : ""));
 };
 
 if (appElements.length > 0) {
   for (const appEl of appElements) {
     let widgetProps = R.reduce(
-      (acc, item) => ({
+      (acc: object, item: Attr) => ({
         ...acc,
-        [camelize(item.name)]: item.value
-      }), {}
+        [camelize(item.name)]: item.value,
+      }),
+      {}
     )(appEl.attributes);
 
-    let childData = [];
+    let childData: object[] = [];
     for (let node of appEl.children) {
       childData.push(
         R.reduce(
-          (acc, item) => ({
+          (acc, item: Attr) => ({
             ...acc,
-            [item.name]: item.value
-          }), {}
+            [item.name]: item.value,
+          }),
+          {}
         )(node.attributes)
       );
     }
@@ -46,17 +49,17 @@ if (appElements.length > 0) {
     widgetProps.childNodes = childData;
 
     let vueInstance = new Vue({
-      render: h => h(App),
+      render: (h) => h(App),
       el: appEl,
       data: {
-        tagName: null,
-        attributes: {}
+        tagName: null as string | null,
+        attributes: {},
       },
-      beforeMount: function () {
+      beforeMount: function() {
         this.tagName = this.$el.tagName.toLowerCase();
       },
       router: make_router(widgetProps),
-      store
+      store,
     });
 
     instances.push(vueInstance);

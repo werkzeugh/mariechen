@@ -5,16 +5,15 @@
 </template>
 
 
-<script>
-export default {
+<script lang="ts">
+import Vue from "vue";
+
+export default Vue.extend({
   name: "App",
   components: {},
-  methods: {},
-
   computed: {},
-
   mounted: function() {
-    this.$router.push({ name: this.$parent.tagName });
+    this.$router.push({ name: (this.$parent as VueExtensions).tagName });
   },
   methods: {
     go: function(path) {
@@ -22,7 +21,7 @@ export default {
       this.$router.push(path);
     }
   }
-};
+});
 </script>
 
 <style lang="scss">

@@ -3,17 +3,19 @@
   <div>
     <div class="vbe-imgfolder">
 
-      IMGFOLDER whats going on !
+      IMGFOLDER hutn
     </div>
   </div>
 
 </template>
 
 
-<script>
+<script lang="ts">
 // const R = require("ramda");
 
-export default {
+import Vue from "vue";
+
+export default Vue.extend({
   name: "ImgFolder",
   data: function() {
     return {
@@ -24,7 +26,7 @@ export default {
   computed: {},
   methods: {},
   mounted: function() {}
-};
+});
 </script>
 
 <style lang="scss">
