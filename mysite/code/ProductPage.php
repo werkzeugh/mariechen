@@ -591,7 +591,7 @@ class ProductPage extends Page
             $html=$this->getCodeForBackendWidgets();
 
             return "
-            AA<vbe-imgfolder class='vueapp-vbe'></vbe-imgfolder>BB".$html;
+            <vbe-imgfolder class='vueapp-vbe' path='/products/{$this->ID}'></vbe-imgfolder>".$html;
         }
         
         public function step_14()

@@ -1,6 +1,6 @@
 declare global {
   interface Window {
-    backendBaseUrl: string;
+    vbeAppConf: object;
   }
 }
 
@@ -11,6 +11,6 @@ export default {
   activeImageIndex: 0,
   images: [],
   products: [],
-  extconf: window.backendBaseUrl,
+  extconf: window.vbeAppConf,
   cartCount: null,
 };

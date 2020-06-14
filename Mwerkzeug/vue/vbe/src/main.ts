@@ -59,7 +59,7 @@ if (appElements.length > 0) {
         this.tagName = this.$el.tagName.toLowerCase();
       },
       router: make_router(widgetProps),
-      store,
+      store: store,
     });
 
     instances.push(vueInstance);
