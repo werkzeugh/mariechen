@@ -243,7 +243,7 @@ class ProductPage extends Page
 
     public function getImageFolderPath()
     {
-        return "/products/".$this->ID;
+        return "/products/product_".$this->ID;
     }
 
     public function getImageFolder()
