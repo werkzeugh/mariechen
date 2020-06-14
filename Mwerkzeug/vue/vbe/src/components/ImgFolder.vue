@@ -8,6 +8,76 @@
         :mwfile-path="path"
         :button-text="buttonText"
       ></Upload>
+      <table class="table table-bordered table-striped taggable-items vbe-imglist">
+        <thead>
+          <tr>
+            <th @click="toggleAll()"><input
+                type="checkbox"
+                class="taggable-toggle"
+                name="taggable_toggle"
+                :checked="isAllSelected"
+              ></th>
+            <th>Img</th>
+            <th>Title</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr
+            class="js-sortable-tr"
+            :class="{'is-hidden':f.hidden}"
+            data-id="$ID"
+            v-for="f in files"
+            :key="f.id"
+          >
+            <td
+              class="taggable-cb-td"
+              @click="toggle(f.id)"
+            >
+              <input
+                type="checkbox"
+                class="taggable-cb"
+                value="MwFile-$ID"
+                :checked="isChecked(f.id)"
+              >
+            </td>
+            <td>
+              <img
+                :src="f.thumbnail_url"
+                @click="toggle(f.id)"
+              >
+            </td>
+            <td>
+              {{f.name}}
+            </td>
+
+            <td class="js-sortable-handle">
+              <i class='fa fa-bars fa-lg'></i>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div v-if="isMinimumOneSelected">
+        <button
+          class="btn "
+          type="button"
+          @click="removeSelected()"
+        ><i class="fa fa-trash-o"></i> alle markierten Bilder löschen</button>
+
+        <button
+          class="btn "
+          type="button"
+          @click="hideSelected()"
+        ><i class="fa fa-trash-o"></i> alle markierten Bilder sperren</button>
+        <button
+          class="btn "
+          type="button"
+          @click="unhideSelected()"
+        ><i class="fa fa-trash-o"></i> alle markierten Bilder entsperren</button>
+
+      </div>
     </div>
   </div>
 
@@ -15,15 +85,39 @@
 
 
 <script lang="ts">
-// const R = require("ramda");
+const R = require("ramda");
+
+import { handleErrorsFromResponse } from "../utils";
 
 import Vue from "vue";
 import Upload from "./Upload.vue";
 
+import { ContainerMixin, ElementMixin } from "vue-slicksort";
+
+const SortableList = {
+  mixins: [ContainerMixin],
+  template: `
+    <ul class="list">
+      <slot />
+    </ul>
+  `
+};
+
+const SortableItem = {
+  mixins: [ElementMixin],
+  props: ["item"],
+  template: `
+    <li class="list-item">{{item}}</li>
+  `
+};
+
 export default Vue.extend({
   name: "ImgFolder",
   data: function() {
-    return {};
+    return {
+      waiting: 0,
+      checkedFileIds: [] as number[]
+    };
   },
   props: {
     path: { type: String, required: true },
@@ -32,23 +126,123 @@ export default Vue.extend({
   components: {
     Upload
   },
-  computed: {
-    upload_url: function() {
-      return this.$store.getters.backendBaseUrl + "/MwFile/receiveDropzoneFile";
+  methods: {
+    isChecked: function(id) {
+      return R.includes(id, this.checkedFileIds);
     },
-    state: function() {
-      return this.$store.state;
+    toggle: function(id) {
+      if (this.isChecked(id)) {
+        this.checkedFileIds = R.without([id], this.checkedFileIds);
+      } else {
+        this.checkedFileIds.push(id);
+      }
+    },
+    toggleAll: function(id) {
+      if (this.checkedFileIds.length > 0) {
+        this.checkedFileIds = [];
+      } else {
+        this.checkedFileIds = R.map(f => f.id, this.files);
+      }
+    },
+    fetchData: function(): void {
+      this.waiting++;
+      this.$store
+        .dispatch("imgfolder/allFiles", { path: this.path })
+        .then(res => {
+          this.waiting--;
+          // this.fetchData();
+        })
+        .catch(res => {
+          console.error(res);
+          handleErrorsFromResponse(this, res);
+          this.waiting--;
+        });
+    },
+    removeSelected: function() {
+      if (confirm("Sind sie sicher ?")) {
+        this.waiting++;
+        this.$store
+          .dispatch("imgfolder/removeFiles", {
+            path: this.path,
+            file_ids: this.checkedFileIds
+          })
+          .then(res => {
+            this.waiting--;
+            this.fetchData();
+          })
+          .catch(res => {
+            console.error(res);
+            handleErrorsFromResponse(this, res);
+            this.waiting--;
+          });
+      }
+    },
+    hideSelected: function() {
+      this.waiting++;
+      this.$store
+        .dispatch("imgfolder/hideFiles", {
+          path: this.path,
+          file_ids: this.checkedFileIds
+        })
+        .then(res => {
+          this.waiting--;
+          this.fetchData();
+        })
+        .catch(res => {
+          console.error(res);
+          handleErrorsFromResponse(this, res);
+          this.waiting--;
+        });
+    },
+    unhideSelected: function() {
+      this.waiting++;
+      this.$store
+        .dispatch("imgfolder/unhideFiles", {
+          path: this.path,
+          file_ids: this.checkedFileIds
+        })
+        .then(res => {
+          this.waiting--;
+          this.fetchData();
+        })
+        .catch(res => {
+          console.error(res);
+          handleErrorsFromResponse(this, res);
+          this.waiting--;
+        });
     }
   },
-  methods: {},
-  mounted: function() {}
+  computed: {
+    isAllSelected: function() {
+      return this.checkedFileIds.length == this.files.length;
+    },
+    isMinimumOneSelected: function() {
+      return this.checkedFileIds.length > 0;
+    },
+    files: function(): object[] {
+      return this.$store.getters["imgfolder/allFiles"];
+    },
+    upload_url: function(): string {
+      return this.$store.getters.backendBaseUrl + "/MwFile/receiveDropzoneFile";
+    }
+  },
+  mounted: function() {
+    this.fetchData();
+  }
 });
 </script>
 
 <style lang="scss">
 @import "../styles/settings.scss";
-// .vbe-imgfolder {
-//   // border: 1px solid red;
-// }
+
+.vbe-imgfolder {
+  // border: 1px solid red;
+  .vbe-imglist {
+    margin-top: 3rem;
+    .is-hidden {
+      opacity: 0.356;
+    }
+  }
+}
 </style>
 

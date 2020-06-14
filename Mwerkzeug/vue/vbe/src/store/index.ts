@@ -5,6 +5,8 @@ import * as actions from "./actions";
 import * as mutations from "./mutations";
 import * as R from "ramda";
 
+import moduleimgfolder from "./modules/imgfolder";
+
 // import createPersistedState from 'vuex-persistedstate';
 
 import initialState from "./initialState";
@@ -18,6 +20,10 @@ const store = new Vuex.Store({
   getters,
   actions,
   mutations,
+  modules: {
+    imgfolder: moduleimgfolder,
+  },
+  // plu
   // plugins: [createPersistedState({key:cacheKey,paths:['cart']})],
   strict: true,
 });

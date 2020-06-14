@@ -588,8 +588,19 @@ class ProductPage extends Page
         
         public function step_16()
         {
+            $html=$this->getCodeForBackendWidgets();
             return "
-            <vbe-imgfolder class='vueapp-vbe' path='/products/{$this->ID}'></vbe-imgfolder>".$html;
+            </form>
+<style>
+    #main_savelink {
+        display: none
+    }
+</style>
+            <vbe-imgfolder 
+            class='vueapp-vbe' 
+            path='{$this->record->getImageFolderPath()}' 
+            button-text=\"Upload New Images...\"></vbe-imgfolder>
+            ".$html;
         }
         
         public function step_14()
@@ -612,7 +623,7 @@ class ProductPage extends Page
             Requirements::javascript("mysite/thirdparty/html5sortable/dist/html5sortable.min.js");
             
             $html='';
-            $html.=$this->getCodeForBackendWidgets();
+    
             
             $html.=TagEngine::getCodeForBackendWidgets();
             if ($_POST['taggable_ids']) {

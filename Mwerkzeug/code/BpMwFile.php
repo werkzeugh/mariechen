@@ -305,6 +305,7 @@ HTML;
         }
     }
   
+    
     public function jsonGetInfo()
     {
         $this->loadRecord();
