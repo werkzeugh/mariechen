@@ -25,7 +25,7 @@ export default Vue.extend({
   },
   data() {
     const germanTexts = {
-      dictDefaultMessage: "Fotos hierher ziehen, bzw. hier tippen",
+      dictDefaultMessage: `<button class='btn btn-primary'>${this.buttonText}</button>`,
       dictFallbackMessage:
         "der Foto-Upload funktioniert leider nicht mit deiner Browser-Version, Bitte verwende einen aktuelleren Browser.",
       dictFallbackText: "",
@@ -53,7 +53,8 @@ export default Vue.extend({
   },
   props: {
     uploadUrl: { type: String, required: true },
-    mwfilePath: { type: String, required: true }
+    mwfilePath: { type: String, required: true },
+    buttonText: { type: String, required:true }
   },
   computed: {},
   methods: {

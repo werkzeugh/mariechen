@@ -243,7 +243,7 @@ class ProductPage extends Page
 
     public function getImageFolderPath()
     {
-        return "/products/".$this->Parent()->URLSegment."/".$this->getImageFolderName();
+        return "/products/".$this->ID;
     }
 
     public function getImageFolder()
@@ -588,8 +588,6 @@ class ProductPage extends Page
         
         public function step_16()
         {
-            $html=$this->getCodeForBackendWidgets();
-
             return "
             <vbe-imgfolder class='vueapp-vbe' path='/products/{$this->ID}'></vbe-imgfolder>".$html;
         }
@@ -613,7 +611,10 @@ class ProductPage extends Page
             $this->NoDataForm=true;
             Requirements::javascript("mysite/thirdparty/html5sortable/dist/html5sortable.min.js");
             
-            $html=TagEngine::getCodeForBackendWidgets();
+            $html='';
+            $html.=$this->getCodeForBackendWidgets();
+            
+            $html.=TagEngine::getCodeForBackendWidgets();
             if ($_POST['taggable_ids']) {
                 TagEngine::singleton()->updateTags($_POST['taggable_ids'], $_POST['add_tags'], $_POST['remove_tags']);
             }
@@ -622,8 +623,6 @@ class ProductPage extends Page
             
             $c['ProductTagsIdString']=TagEngine::singleton()->getTagIdStringForPage($this->record->ID);
             $c['VariantTagsIdString']=TagEngine::singleton()->getTagIdStringForChildren($this->record->ID);
-            
-            
             
             
             $this->formFields[$p['fieldname']]=$p;

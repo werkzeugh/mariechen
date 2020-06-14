@@ -11,7 +11,6 @@ import initialState from "./initialState";
 
 Vue.use(Vuex);
 
-console.log("#log 4047", initialState);
 // const cacheKey='vuex_foo';
 
 const store = new Vuex.Store({

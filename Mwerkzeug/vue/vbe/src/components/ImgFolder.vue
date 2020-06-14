@@ -3,10 +3,10 @@
   <div>
     <div class="vbe-imgfolder">
 
-      IMGFOLDER hutn
       <Upload
         :upload-url="upload_url"
         :mwfile-path="path"
+        :button-text="buttonText"
       ></Upload>
     </div>
   </div>
@@ -26,7 +26,8 @@ export default Vue.extend({
     return {};
   },
   props: {
-    path: { type: String, required: true }
+    path: { type: String, required: true },
+    buttonText: { type: String, required: false, default: "Upload Files..." }
   },
   components: {
     Upload
@@ -34,6 +35,9 @@ export default Vue.extend({
   computed: {
     upload_url: function() {
       return this.$store.getters.backendBaseUrl + "/MwFile/receiveDropzoneFile";
+    },
+    state: function() {
+      return this.$store.state;
     }
   },
   methods: {},
@@ -43,8 +47,8 @@ export default Vue.extend({
 
 <style lang="scss">
 @import "../styles/settings.scss";
-.vbe-imgfolder {
-  border: 1px solid red;
-}
+// .vbe-imgfolder {
+//   // border: 1px solid red;
+// }
 </style>
 
