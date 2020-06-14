@@ -48,11 +48,11 @@ class BpMwFileController extends BackendPageController
     public function receiveDropzoneFile(SilverStripe\Control\HTTPRequest $request)
     {
         set_time_limit(500); // 5 minutes
-        $mwFilePath=$request->getHeader('mwfile-path');
+        $mwFileFolderPath=$request->getHeader('mwfile-path');
 
-        $folder=MwFileManagement::getOrCreateFolder($mwFilePath);
+        $folder=MwFileManagement::getOrCreateFolder($mwFileFolderPath);
         if (!$folder) {
-            die("cannot create folder $mwFilePath");
+            die("cannot create folder $mwFileFolderPath");
         }
  
         $targetDir=$folder->getAbsoluteFilename();

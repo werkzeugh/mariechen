@@ -209,6 +209,30 @@ class MwFileManagement extends MwFile
         return 1;
     }
 
+    
+    public static function importTmpFileToFolder($absolutePath, $mwFileFolderPath)
+    {
+
+        //similar to receiveDropzoneFile
+        $folder=MwFileManagement::getOrCreateFolder($mwFileFolderPath);
+        if (!$folder) {
+            die("cannot create folder $mwFileFolderPath");
+        }
+ 
+        $targetDir=$folder->getAbsoluteFilename();
+
+        $fileName=basename($absolutePath);
+        
+        $fileName=MwFileManagement::cleanupFilename($fileName);
+
+        if (file_exists($targetDir . DIRECTORY_SEPARATOR . $fileName)) {
+            unlink($targetDir . DIRECTORY_SEPARATOR . $fileName);
+        }
+        rename($absolutePath, $targetDir . DIRECTORY_SEPARATOR . $fileName);
+        $writtenFile=MwFileManagement::addPhysicalFile($targetDir . DIRECTORY_SEPARATOR . $fileName);
+
+        return $writtenFile;
+    }
 
     public function doRenameFolder($file, $newname)
     {

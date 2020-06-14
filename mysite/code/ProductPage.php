@@ -601,6 +601,8 @@ class ProductPage extends Page
             path='{$this->record->getImageFolderPath()}' 
             button-text=\"Upload New Images...\"></vbe-imgfolder>
             ".$html;
+
+            Requirements::javascript("mysite/thirdparty/html5sortable/dist/html5sortable.min.js");
         }
         
         public function step_14()

@@ -27,7 +27,6 @@
           <tr
             class="js-sortable-tr"
             :class="{'is-hidden':f.hidden}"
-            data-id="$ID"
             v-for="f in files"
             :key="f.id"
           >
@@ -92,26 +91,7 @@ import { handleErrorsFromResponse } from "../utils";
 import Vue from "vue";
 import Upload from "./Upload.vue";
 
-import { ContainerMixin, ElementMixin } from "vue-slicksort";
-
-const SortableList = {
-  mixins: [ContainerMixin],
-  template: `
-    <ul class="list">
-      <slot />
-    </ul>
-  `
-};
-
-const SortableItem = {
-  mixins: [ElementMixin],
-  props: ["item"],
-  template: `
-    <li class="list-item">{{item}}</li>
-  `
-};
-
-export default Vue.extend({
+export default Vue.extend<any, any, any, any>({
   name: "ImgFolder",
   data: function() {
     return {
