@@ -35,7 +35,8 @@ class MwFile extends DataObject implements AssetContainer
         'LastParent'  => 'Varchar(255)',
         'OldFilename' => 'Varchar(255)',
         'UsedIn' => 'Varchar(255)',
-
+        'Hidden' => DBBoolean::class,
+        'Sort'=>'Int',
     );
 
     private static $has_one = array(
@@ -229,6 +230,16 @@ class MwFile extends DataObject implements AssetContainer
     {
         return file_exists($this->getAbsoluteFilename());
     }
+
+    public function getSortedChildren($opts=[])
+    {
+        $where = "ParentID={$this->ID} and Deleted=0";
+        if (!$opts['show_hidden']) {
+            $where.=" and Hidden=0";
+        }
+        return DataObject::get('MwFile', $where, "Sort asc");
+    }
+
 
     /**
      * Get value of filename
