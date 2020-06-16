@@ -8,15 +8,20 @@
         :mwfile-path="path"
         :button-text="buttonText"
       ></Upload>
+
+      <div class="listheader">
+        <span @click="toggleAll()"><input
+            type="checkbox"
+            class="taggable-toggle"
+            name="taggable_toggle"
+            :checked="isAllSelected"
+          >alle/keine markieren</span>
+      </div>
+
       <table class="table table-bordered table-striped taggable-items vbe-imglist">
         <thead>
           <tr>
-            <th @click="toggleAll()"><input
-                type="checkbox"
-                class="taggable-toggle"
-                name="taggable_toggle"
-                :checked="isAllSelected"
-              ></th>
+
             <th>Img</th>
             <th>Title</th>
             <th></th>
@@ -51,9 +56,6 @@
               {{f.name}}
             </td>
 
-            <td class="js-sortable-handle">
-              <i class='fa fa-bars fa-lg'></i>
-            </td>
           </tr>
         </tbody>
       </table>

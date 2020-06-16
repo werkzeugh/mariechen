@@ -11,7 +11,6 @@ use SilverStripe\View\ViewableData;
 
 class MwShop_Order extends DataObject
 {
-    
     private static $db=array(
 
         "TransactionID"             => "Varchar(255)",
@@ -63,7 +62,6 @@ class MwShop_Order extends DataObject
     
     public function add2Log($msg, $data = null)
     {
-        
         $data2log=array();
         $data2log['time']=Date('Y-m-d H:i:s');
         $data2log['msg']=$msg;
@@ -81,7 +79,6 @@ class MwShop_Order extends DataObject
     
     public function getLogData()
     {
-        
         $all_lines=array();
         
         if ($this->LogJSON) {
@@ -128,7 +125,6 @@ class MwShop_Order extends DataObject
     
     public function getCartData4Template()
     {
-       
         $cdata=$this->getCartData();
         $cdata['items']=MwUtils::convertArray2ArrayList($cdata['items']);
        
@@ -146,14 +142,12 @@ class MwShop_Order extends DataObject
     
     public function getPaymentType_Str()
     {
-
         $arr=$this->getShop()->getPaymentTypes();
         return $arr[$this->PaymentType];
     }
 
     public function getDeliveryType_Str()
     {
-
         $arr=$this->getShop()->getDeliveryTypes();
         return $arr[$this->DeliveryType];
     }
@@ -191,7 +185,6 @@ class MwShop_Order extends DataObject
 
     public function sendEmailToMerchant()
     {
-        
         $to=MwShop::conf('MerchantEmail');
         $subject="Neue Bestellung von {$this->BillingEmail} #{$this->OrderNr}";
 
@@ -206,7 +199,6 @@ class MwShop_Order extends DataObject
     
     public function sendEmailToCustomer()
     {
-        
         $to=$this->BillingEmail;
 
         $subject="Ihre Bestellung auf {array_get($_SERVER,'HTTP_HOST')} - #{$this->OrderNr}";
@@ -236,7 +228,6 @@ class MwShop_Order extends DataObject
 
     public function getCountries()
     {
-        
         return array(
 
             'at' => 'Österreich',
@@ -274,13 +265,10 @@ class MwShop_Order extends DataObject
 
 class MwShop extends ViewableData
 {
-
-
-
-    var $Controller;
-    var $cartrecord;
+    public $Controller;
+    public $cartrecord;
     
-    static $conf;
+    public static $conf;
     
     public static function conf($key)
     {
@@ -310,7 +298,6 @@ class MwShop extends ViewableData
 
     public function getPaymentTypes($currentCart = null)
     {
-
         $ret= array(
             'cash'       => 'Barzahlung bei Abholung',
             'vorkasse'   => 'Vorkasse',
@@ -318,7 +305,7 @@ class MwShop extends ViewableData
             'sofort'     => 'Sofortüberweisung',
             'creditcard' => 'Kreditkarte',
         );
-                         return $ret;
+        return $ret;
     }
     
 
@@ -340,7 +327,6 @@ class MwShop extends ViewableData
 
     public function saveCart($cart)
     {
-        
         if (!$cart) {
             $cart=$this->Cart;
         } else {
@@ -358,13 +344,13 @@ class MwShop extends ViewableData
     
     public function addToCart($items)
     {
-        
         $cart=$this->Cart;
         if (is_array($items)) {
             foreach ($items as $item) {
                 $cart['items'][$item['articleid']]['amount']+=$newamount;
+               
                 if ($cart['items'][$item['articleid']]['amount']==0) {
-                     $cart['items'][$item['articleid']]['amount']=1;
+                    $cart['items'][$item['articleid']]['amount']=1;
                 }
             }
         }
@@ -378,7 +364,6 @@ class MwShop extends ViewableData
     
     public function SidebarCartHTML()
     {
-
         if (!MwShop::conf('hideSidebarCartHTML')) {
             $c=$this->getCartData4Display();
             return Controller::curr()->customise($c)->renderWith('Includes/MwShop_SidebarCart');
@@ -470,19 +455,19 @@ class MwShop extends ViewableData
                 
 
             if ($fdata['PaymentType']=='vorkasse') {
-                    $rabattitem=array();
+                $rabattitem=array();
                     
-                    $rabattitem['product_title']='-0.5% Rabatt bei Zahlungsart "Vorkasse" ';
+                $rabattitem['product_title']='-0.5% Rabatt bei Zahlungsart "Vorkasse" ';
 
-                    $rabattitem['amount']="1";
+                $rabattitem['amount']="1";
                     
                     
-                    $rabattitem['price']=-$summebrutto*0.005;
-                    $rabattitem['price_str']=$this->formatPrice($rabattitem['price']);
+                $rabattitem['price']=-$summebrutto*0.005;
+                $rabattitem['price_str']=$this->formatPrice($rabattitem['price']);
                     
-                    $mycart['items'][]=$rabattitem;
+                $mycart['items'][]=$rabattitem;
                     
-                    $summebrutto+=$rabattitem['price'];
+                $summebrutto+=$rabattitem['price'];
             }
             
             
@@ -523,8 +508,7 @@ class MwShop extends ViewableData
     
     public function CheckoutPage()
     {
-
-          return SiteTree::get_by_link(MwShop::conf('CheckoutPage'));
+        return SiteTree::get_by_link(MwShop::conf('CheckoutPage'));
     }
     
     public static function formatPrice($val)

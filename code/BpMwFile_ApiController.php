@@ -40,7 +40,7 @@ class BpMwFile_ApiController extends BackendPageController
         $folder=MwFile::getByFilename($path);
         $payload=[];
         if ($folder) {
-            foreach ($folder->getChildren() as $f) {
+            foreach ($folder->getSortedChildren(["show_hidden"=>1]) as $f) {
                 $payload[]=$this->getFileInfo($f);
             }
         }
