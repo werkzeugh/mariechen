@@ -79,7 +79,7 @@
             <div
               class="item"
               :class="{'is-hidden':f.hidden,'is-checked':isChecked(f.id)}"
-              @click="toggle(f.id)"
+              @click.prevent="toggle(f.id)"
               v-for="(f, index) in files"
               :key="index"
             >
@@ -91,11 +91,12 @@
               >
               <div class="imgholder">
                 <div class='imgbox'>
-                  <div
+                  <a
                     class='img'
+                    :href="f.url"
                     :style="{backgroundImage:`url(${f.thumbnail_url})`}"
                   >
-                  </div>
+                  </a>
                 </div>
               </div>
               <div class="info">
@@ -107,7 +108,10 @@
             </div>
           </div>
 
-          <div v-if="isMinimumOneSelected">
+          <div
+            v-if="isMinimumOneSelected"
+            class="list-buttons"
+          >
             <button
               class="btn "
               type="button"
@@ -153,9 +157,10 @@
   }
   .imgholder {
     flex: 0 0 4rem;
-    padding: 0.9rem;
+    width: 2rem;
+    @include mx(1rem);
+    padding: 4px;
     .imgbox {
-      width: 2rem;
       height: 0;
       padding-bottom: (200/200) * 100%;
       position: relative;
@@ -170,7 +175,7 @@
         right: 0px;
         bottom: 0px;
         // border: 1px solid red;
-        background-position: center center;
+        background-position: 20%;
         background-size: contain;
         background-repeat: no-repeat;
       }
@@ -251,6 +256,13 @@
     padding: 1rem;
     margin: 1rem;
   }
+  .list-buttons {
+    display: flex;
+    justify-content: flex-start;
+    > * {
+      margin-right: 1em;
+    }
+  }
   .vbe-imglist {
     margin-top: 3rem;
     .listheader {
@@ -289,7 +301,7 @@ export default Vue.extend<any, any, any, any>({
   data: function() {
     return {
       waiting: 0,
-      mode: "sort",
+      mode: "list",
       checkedFileIds: [] as number[],
       sortedfiles: [] as object[]
     };

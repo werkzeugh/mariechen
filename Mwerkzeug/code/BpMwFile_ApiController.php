@@ -59,6 +59,7 @@ class BpMwFile_ApiController extends BackendPageController
         $ret=[
             "id"=>$f->ID,
             "filename"=>$f->Filename,
+            "url"=>$f->Link(),
             "name"=>basename($f->Filename),
             "hidden"=>$f->Hidden?true:false,
         ];
