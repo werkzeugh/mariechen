@@ -8,79 +8,142 @@
         :mwfile-path="path"
         :button-text="buttonText"
       ></Upload>
-      <table class="table table-bordered table-striped taggable-items vbe-imglist">
-        <thead>
-          <tr>
-            <th @click="toggleAll()"><input
-                type="checkbox"
-                class="taggable-toggle"
-                name="taggable_toggle"
-                :checked="isAllSelected"
-              ></th>
-            <th>Img</th>
-            <th>Title</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
 
-          <tr
-            class="js-sortable-tr"
-            :class="{'is-hidden':f.hidden}"
-            v-for="f in files"
-            :key="f.id"
+      <div class="vbe-imglist">
+
+        <div class="listheader">
+          <span @click="toggleAll()"><input
+              type="checkbox"
+              class="taggable-toggle"
+              name="taggable_toggle"
+              :checked="isAllSelected"
+            >&nbsp;alle/keine markieren</span>
+        </div>
+
+        <div class="item-list">
+          <div
+            class="item"
+            :class="{'is-hidden':f.hidden,'is-checked':isChecked(f.id)}"
+            @click="toggle(f.id)"
+            v-for="(f, index) in files"
+            :key="index"
           >
-            <td
-              class="taggable-cb-td"
-              @click="toggle(f.id)"
+            <input
+              type="checkbox"
+              class="cb"
+              value="MwFile-$ID"
+              :checked="isChecked(f.id)"
             >
-              <input
-                type="checkbox"
-                class="taggable-cb"
-                value="MwFile-$ID"
-                :checked="isChecked(f.id)"
-              >
-            </td>
-            <td>
-              <img
-                :src="f.thumbnail_url"
-                @click="toggle(f.id)"
-              >
-            </td>
-            <td>
-              {{f.name}}
-            </td>
+            <div class="imgholder">
+              <div class='imgbox'>
+                <div
+                  class='img'
+                  :style="{backgroundImage:`url(${f.thumbnail_url})`}"
+                >
+                </div>
+              </div>
+            </div>
+            <div class="info">
+              <div class="title">
+                {{f.name}}
+              </div>
+            </div>
 
-            <td class="js-sortable-handle">
-              <i class='fa fa-bars fa-lg'></i>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+          </div>
+        </div>
 
-      <div v-if="isMinimumOneSelected">
-        <button
-          class="btn "
-          type="button"
-          @click="removeSelected()"
-        ><i class="fa fa-trash-o"></i> alle markierten Bilder löschen</button>
+        <div v-if="isMinimumOneSelected">
+          <button
+            class="btn "
+            type="button"
+            @click="removeSelected()"
+          ><i class="fa fa-trash-o"></i> alle markierten Bilder löschen</button>
 
-        <button
-          class="btn "
-          type="button"
-          @click="hideSelected()"
-        ><i class="fa fa-trash-o"></i> alle markierten Bilder sperren</button>
-        <button
-          class="btn "
-          type="button"
-          @click="unhideSelected()"
-        ><i class="fa fa-trash-o"></i> alle markierten Bilder entsperren</button>
+          <button
+            class="btn "
+            type="button"
+            @click="hideSelected()"
+          ><i class="fa fa-trash-o"></i> alle markierten Bilder sperren</button>
+          <button
+            class="btn "
+            type="button"
+            @click="unhideSelected()"
+          ><i class="fa fa-trash-o"></i> alle markierten Bilder entsperren</button>
 
+        </div>
       </div>
     </div>
   </div>
 
 </template>
+
+<style lang="scss">
+@import "../styles/settings.scss";
+
+.vbe-imgfolder {
+  // border: 1px solid red;
+  .vbe-imglist {
+    margin-top: 3rem;
+    .listheader {
+      // border: 1px solid #ccc;
+      padding: 0.6rem;
+      background: #eee;
+    }
+
+    .imgbox {
+      height: 0;
+      padding-bottom: (200/200) * 100%;
+      position: relative;
+      // border: 2px solid #ddd;
+      // background-color: ##fff;
+
+      > .img {
+        display: block;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
+        // border: 1px solid red;
+        background-position: center center;
+        // background-size: cover;
+        background-repeat: no-repeat;
+      }
+    }
+
+    .item-list {
+      display: flex;
+      flex-wrap: wrap;
+      .item {
+        width: 200px;
+        height: 200px;
+        position: relative;
+        &.is-hidden {
+          .imgbox,
+          .info {
+            opacity: 0.356;
+          }
+        }
+        &.is-checked {
+          background: #eeeeff;
+        }
+
+        .cb {
+          position: absolute;
+          left: 0.5em;
+          top: 0.5em;
+        }
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        padding: 1rem;
+        margin: 1rem;
+      }
+    }
+  }
+}
+</style>
+
+
 
 
 <script lang="ts">
@@ -211,18 +274,4 @@ export default Vue.extend<any, any, any, any>({
   }
 });
 </script>
-
-<style lang="scss">
-@import "../styles/settings.scss";
-
-.vbe-imgfolder {
-  // border: 1px solid red;
-  .vbe-imglist {
-    margin-top: 3rem;
-    .is-hidden {
-      opacity: 0.356;
-    }
-  }
-}
-</style>
 
