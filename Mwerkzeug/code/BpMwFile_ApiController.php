@@ -30,7 +30,8 @@ class BpMwFile_ApiController extends BackendPageController
         'get_files',
         'remove_files',
         'hide_files',
-        'unhide_files'
+        'unhide_files',
+        'sort_files'
     ];
 
     public function get_files(SilverStripe\Control\HTTPRequest $request)
@@ -74,7 +75,7 @@ class BpMwFile_ApiController extends BackendPageController
                 }
             } else {
                 //default thumbnail
-                if ($tn=$img->CMSThumbnail()) {
+                if ($tn=$img->getFormattedImage("SetFittedSize", 200, 200)) {
                     $ret['thumbnail_url']=$tn->Link();
                 }
             }
@@ -94,7 +95,7 @@ class BpMwFile_ApiController extends BackendPageController
             if ($folder) {
                 foreach ($file_ids as $id) {
                     $f=MwFile::getByID($id);
-                    if ($f) {
+                    if ($f && $f->ParentID==$folder->ID) {
                         $f->delete();
                         $removed_file_ids[]=$id;
                     }
@@ -112,6 +113,43 @@ class BpMwFile_ApiController extends BackendPageController
         echo json_encode($ret);
         exit();
     }
+
+
+    public function sort_files(SilverStripe\Control\HTTPRequest $request)
+    {
+        $q=json_decode($request->getBody(), 1);
+        $file_ids=array_get($q, "sorted_ids", []);
+        $path=array_get($q, "path", null);
+        $handled_file_ids=[];
+        if ($path) {
+            $folder=MwFile::getByFilename($path);
+            if ($folder) {
+                $n=0;
+                foreach ($file_ids as $id) {
+                    $f=MwFile::getByID($id);
+                    $n++;
+                    if ($f && $f->ParentID==$folder->ID) {
+                        $f->Sort=$n;
+                        $f->write();
+                        $handled_file_ids[]=$id;
+                    }
+                }
+            }
+        }
+        
+        
+        $ret=[
+            "payload"=>[
+                "handled_file_ids"=>$handled_file_ids,
+            ],
+        ];
+        header('content-type: application/json; charset=utf-8');
+        echo json_encode($ret);
+        exit();
+    }
+
+
+
     public function hide_files(SilverStripe\Control\HTTPRequest $request)
     {
         $q=json_decode($request->getBody(), 1);
@@ -123,7 +161,7 @@ class BpMwFile_ApiController extends BackendPageController
             if ($folder) {
                 foreach ($file_ids as $id) {
                     $f=MwFile::getByID($id);
-                    if ($f) {
+                    if ($f && $f->ParentID==$folder->ID) {
                         $f->Hidden=1;
                         $f->write();
                         $handled_file_ids[]=$id;
@@ -154,7 +192,7 @@ class BpMwFile_ApiController extends BackendPageController
             if ($folder) {
                 foreach ($file_ids as $id) {
                     $f=MwFile::getByID($id);
-                    if ($f) {
+                    if ($f && $f->ParentID==$folder->ID) {
                         $f->Hidden=0;
                         $f->write();
                         $handled_file_ids[]=$id;

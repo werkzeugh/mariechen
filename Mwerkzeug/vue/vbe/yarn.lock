@@ -8249,6 +8249,11 @@ vue-router@^3.3.4:
   resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-3.3.4.tgz#4e38abc34a11c41b6c3d8244449a2e363ba6250b"
   integrity sha512-SdKRBeoXUjaZ9R/8AyxsdTqkOfMcI5tWxPZOUX5Ie1BTL5rPSZ0O++pbiZCeYeythiZIdLEfkDiQPKIaWk5hDg==
 
+vue-slicksort@^0.2.0-0:
+  version "0.2.0-0"
+  resolved "https://registry.yarnpkg.com/vue-slicksort/-/vue-slicksort-0.2.0-0.tgz#a53fd5efac0a7756bef8b08643993880b8e06a9b"
+  integrity sha512-KjO8CXDiV+2WI7Q2/GZxRfkQpf17F1OK/wMseDYA6j0IWtkTTvGoEAeOyJNmj8+NDXjk6eJHFKT8k32t6SY87w==
+
 vue-style-loader@^4.1.0, vue-style-loader@^4.1.2:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/vue-style-loader/-/vue-style-loader-4.1.2.tgz#dedf349806f25ceb4e64f3ad7c0a44fba735fcf8"

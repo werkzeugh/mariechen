@@ -1090,6 +1090,9 @@ class MwFile extends DataObject implements AssetContainer
                 case "CroppedImage":
                     return $backend->croppedResize($arg1, $arg2);
                     break;
+                case "SetFittedSize":
+                     return $backend->resizeRatio($arg1, $arg2);
+                    break;
                 default:
                     die("don't know how to generate image-format $format");
             }
